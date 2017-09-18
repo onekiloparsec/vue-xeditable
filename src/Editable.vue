@@ -4,21 +4,30 @@
     <div v-show='editable_mode && !loading' class='editable-control'>
       <input type="text"
             :value="val"
-            @blur='editable_blur'
+            @blur='editable_changed'
             @keydown='keydown'
-            v-if='type == "text"'>
-      <textarea @blur='editable_blur'
+            v-if='type == "text"'
+            class='vue-form-control'>
+      <textarea @blur='editable_changed'
                 @keydown='keydown'
-                v-else-if='type == "textarea"'>{{val}}</textarea>
+                v-else-if='type == "textarea"'
+                class='vue-form-control'>{{val}}</textarea>
       <input type="number"
             :value="val"
-            @blur='editable_blur'
+            @blur='editable_changed'
             @keydown='keydown'
-            v-if='type == "number"'>
-      <select @change='editable_blur'
-              v-if='type == "select"'>
+            v-if='type == "number"'
+            class='vue-form-control'>
+      <select @change='editable_changed'
+              v-if='type == "select"'
+              class='vue-form-control'>
         <option v-for='option in options' :value="option[1]">{{option[0]}}</option>
       </select>
+      <quill-editor v-model="val"
+                    ref="myQuillEditor"
+                    :options="editorOption"
+                    @blur="editable_changed">
+        </quill-editor>
     </div>
     <div class='editable-loader' v-show='loading'></div>
 
@@ -26,8 +35,17 @@
 </template>
 
 <script>
+import Vue from 'vue'
+import { quillEditor } from 'vue-quill-editor'
+
 export default {
   name: 'editable',
+  editor() {
+    return this.$refs.myQuillEditor.quill
+  },
+  components: {
+    'quill-editor': quillEditor
+  },
   props: {
     onblur: {
       type: Function,
@@ -36,6 +54,10 @@ export default {
     },
     value: {
       type: [String, Number]
+    },
+    height: {
+      type: Number,
+      default: 350
     },
     attr: {
       type: String,
@@ -86,11 +108,16 @@ export default {
       default: ''
     }
   },
+  created() {
+  },
   data () {
     return {
       editable_mode: false,
       loading: false,
-      val: this.value
+      val: this.value,
+      editorOption: {
+        
+      }
     }
   },
   watch: {
@@ -103,15 +130,14 @@ export default {
   methods: {
     display_class() {
       if (this.val == null || this.val == '') {
-        return 'vue-editable-empty';
+        return 'vue-editable-empty vue-editable-value';
       }
-      return '';
+      return 'vue-editable-value';
     },
     display_value() {
       if (this.val == null || this.val == '') {
         return this.empty;
       }
-      debugger
       if (this.type == 'select') {
         for(let option of this.options) {
           if (option[1] == this.val) return option[0]
@@ -121,15 +147,23 @@ export default {
     },
     toggle_editable_mode(e) {
       this.editable_mode = !this.editable_mode;
+      let that = this;
       if (this.editable_mode) {
         setTimeout(function() {
+          that.$emit('show');
           let inputs = e.target.nextElementSibling.children
-          for (let input of inputs) { input.focus() }
+          if (this.type == 'wysihtml5') {
+            this.editor.focus()
+          } else {
+            for (let input of inputs) { input.focus() } 
+          }
         }, 100)
+      } else {
+        this.$emit('hide');
       }
     },
     keydown(e) {
-      if (e.keyCode == 13) this.editable_blur(e)
+      if (e.keyCode == 13) this.editable_changed(e)
     },
     get_value(el) {
       switch (this.type) {
@@ -138,20 +172,31 @@ export default {
       case 'number':
       case 'select':
         return el.value;
+      case 'wysihtml5':
+        debugger
       default:
-        
+        return ''
       }
     },
-    editable_blur(e) {
+    editable_changed(e) {
       let value = this.get_value(e.target)
       if (this.url && this.url.length) {
         this.request_url(value)
       } else {
-        this.editable_mode = false;
-        this.onblur();
-        this.$emit('update:value', value)
-        this.val = value;
+        this.value_did_changed(value)
       }
+      this.$emit('change', value);
+    },
+    value_did_changed(value) {
+      this.editable_mode = false;
+      this.onblur();
+      this.$emit('update:value', value)
+      this.val = value;
+      this.loading = false;
+    },
+    value_change_error(value) {
+      this.onblur();
+      this.loading = false;
     },
     request_url(value) {
       if (value == this.val) { return }
@@ -168,8 +213,9 @@ export default {
         url: this.url,
         data: data
       }).then(response => {
-        this.loading = false;
+        this.value_did_changed(value)
       }).error(error =>{
+        
         this.loading = false;
       });
     }
@@ -178,7 +224,7 @@ export default {
 </script>
 
 <style>
-  input,textarea {
+  .vue-form-control {
     display: block;
     width: 100%;
     padding: 5px;
@@ -199,7 +245,7 @@ export default {
     position: relative;
     display: inline-block;
   }
-  .vue_editable span {
+  .vue_editable .vue-editable-value {
     white-space: pre-wrap;
   }
   .vue_editable:hover {
@@ -249,6 +295,30 @@ export default {
   .editable-control {
     width: 100%;
     display: inline-block;
+  }
+  .vue-editable-button {
+    display: inline-block;
+    padding: 3px 5px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #fff;
+    background: #07c;
+    float: right;
+    margin-top: 10px;
   }
   @-webkit-keyframes load1 {
     0%,

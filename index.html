@@ -36,6 +36,12 @@
         <pre>&lt;script&gt;options = {{JSON.stringify(options)}}&lt;/script&gt;</br>&lt;editable type='select' value={{forth}} :options='options'&gt;&lt;/editable&gt;</pre>
         <editable :value.sync='forth' type='select' :options='options'></editable>
         value is {{forth}}
+        <h4>
+          WYSIHTML5 Editable
+        </h4>
+        <pre>&lt;editable type='wysihtml5' value={{fifth}}&gt;&lt;/editable&gt;</pre>
+        <editable :value.sync='fifth' type='wysihtml5'></editable>
+        {{fifth}}
       </div>
 
     </div>
@@ -58,7 +64,7 @@
       border-radius: 5px;
       box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
     }
-    span {
+    .vue-editable-value {
       color: #17c;
       border-bottom: 1px dashed #07c;
       line-height: 22px;
