@@ -1,17 +1,24 @@
 <template>
   <div class='vue_editable'>
-    <span v-show='!editable_mode && !loading' @click='toggle_editable_mode'>{{val}}</span>
-    <div v-show='editable_mode && !loading'>
+    <span v-show='!editable_mode && !loading' @click='toggle_editable_mode' v-bind:class='display_class()'>{{display_value()}}</span>
+    <div v-show='editable_mode && !loading' class='editable-control'>
       <input type="text"
             :value="val"
             @blur='editable_blur'
+            @keydown='keydown'
             v-if='type == "text"'>
       <textarea @blur='editable_blur'
+                @keydown='keydown'
                 v-else-if='type == "textarea"'>{{val}}</textarea>
       <input type="number"
             :value="val"
             @blur='editable_blur'
+            @keydown='keydown'
             v-if='type == "number"'>
+      <select @change='editable_blur'
+              v-if='type == "select"'>
+        <option v-for='option in options' :value="option[1]">{{option[0]}}</option>
+      </select>
     </div>
     <div class='editable-loader' v-show='loading'></div>
 
@@ -28,9 +35,7 @@ export default {
       default: function(){}
     },
     value: {
-      type: String,
-      required: true,
-      default: ''
+      type: [String, Number]
     },
     attr: {
       type: String,
@@ -41,6 +46,9 @@ export default {
       type: String,
       required: false,
       default: 'POST'
+    },
+    options: {
+      type: Array
     },
     resource: {
       type: String,
@@ -67,6 +75,11 @@ export default {
       required: false,
       default: false
     },
+    empty: {
+      type: String,
+      required: false,
+      default: 'Empty'
+    },
     placeholder: {
       type: String,
       required: false,
@@ -77,13 +90,35 @@ export default {
     return {
       editable_mode: false,
       loading: false,
-      val: ''
+      val: this.value
+    }
+  },
+  watch: {
+    value(val) {
+      this.val = val;
     }
   },
   created () {
-    this.val = this.value
   },
   methods: {
+    display_class() {
+      if (this.val == null || this.val == '') {
+        return 'vue-editable-empty';
+      }
+      return '';
+    },
+    display_value() {
+      if (this.val == null || this.val == '') {
+        return this.empty;
+      }
+      debugger
+      if (this.type == 'select') {
+        for(let option of this.options) {
+          if (option[1] == this.val) return option[0]
+        }
+      }
+      return this.val;
+    },
     toggle_editable_mode(e) {
       this.editable_mode = !this.editable_mode;
       if (this.editable_mode) {
@@ -93,23 +128,28 @@ export default {
         }, 100)
       }
     },
+    keydown(e) {
+      if (e.keyCode == 13) this.editable_blur(e)
+    },
     get_value(el) {
       switch (this.type) {
       case 'textarea':
       case 'text':
       case 'number':
+      case 'select':
         return el.value;
       default:
         
       }
     },
-    editable_blur(e){
+    editable_blur(e) {
       let value = this.get_value(e.target)
       if (this.url && this.url.length) {
         this.request_url(value)
       } else {
         this.editable_mode = false;
         this.onblur();
+        this.$emit('update:value', value)
         this.val = value;
       }
     },
@@ -153,14 +193,21 @@ export default {
     outline: none;
   }
   .vue_editable {
+    width: 100%;
     color: #222;
     cursor: pointer;
     position: relative;
     display: inline-block;
+  }
+  .vue_editable span {
     white-space: pre-wrap;
   }
   .vue_editable:hover {
     color: #666;
+  }
+  .vue-editable-empty {
+    color: #ea0002;
+    font-style: italic;
   }
   .editable-loader,
   .editable-loader:before,
@@ -199,6 +246,10 @@ export default {
   .editable-loader:after {
     left: 1.5em;
   }
+  .editable-control {
+    width: 100%;
+    display: inline-block;
+  }
   @-webkit-keyframes load1 {
     0%,
     80%,
@@ -222,4 +273,5 @@ export default {
       box-shadow: 0 -2em;
       height: 5em;
     }
-  }</style>
+  }
+</style>
