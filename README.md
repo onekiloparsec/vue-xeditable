@@ -1,4 +1,5 @@
 # vue-xeditable
+[![](https://badge.juejin.im/entry/59c08ef5f265da065d2b6821/likes.svg?style=flat-square)](https://juejin.im/post/59c08ed2f265da06611f67c4)
 Better editable element in Vue
 
 # Example
