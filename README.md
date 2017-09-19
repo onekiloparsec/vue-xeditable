@@ -2,6 +2,7 @@
 Better editable element in Vue
 
 # Example
+[DEMO PAGE](https://kar-wai-wong.github.io/vue-xeditable/)
 
 # Use Setup
 
