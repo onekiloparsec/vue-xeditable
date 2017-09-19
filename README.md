@@ -26,3 +26,6 @@ new Vue({
 
 ```
 
+# Support Types
+**text**, **textarea**, **number**, **text**, **quill(rich text editor)**
+
