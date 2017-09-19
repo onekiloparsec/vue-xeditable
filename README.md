@@ -6,4 +6,7 @@ Better editable element in Vue
 #Use Setup
 
 install vue-editable
+```
+npm install vue-xeditable --save
+```
 
