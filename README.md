@@ -3,10 +3,26 @@ Better editable element in Vue
 
 # Example
 
-#Use Setup
+# Use Setup
 
 install vue-editable
 ```
 npm install vue-xeditable --save
+```
+
+## Vue mount
+```
+import Editable from './Editable.vue'
+
+new Vue({
+  el: '#app',
+  components: {
+    'editable': Editable
+  }
+})
+
+
+<editable value.sync='Do not go gentle into that good night'></editable>
+
 ```
 
