@@ -93,7 +93,6 @@ export default {
     url: {
       type: String,
       required: false,
-      default: ''
     },
     title: {
       type: String,
@@ -205,7 +204,7 @@ export default {
       }
       let value = this.get_value(e.target)
       if (this.url && this.url.length) {
-        this.request_url(value)
+        this.send_request(value)
       } else {
         this.value_did_changed(value)
       }
@@ -222,14 +221,14 @@ export default {
       this.onblur();
       this.loading = false;
     },
-    request_url(value) {
+    send_request(value) {
       if (value == this.val) { return }
       this.loading = true;
       let data = {}
       data[this.attr] = value
       if (this.resource) {
         let temp = {};
-        temp[resource] = data;
+        temp[this.resource] = data;
         data = temp;
       }
       axios({
@@ -238,7 +237,7 @@ export default {
         data: data
       }).then(response => {
         this.value_did_changed(value)
-      }).error(error =>{
+      }).catch(error =>{
         this.loading = false;
       });
     }
@@ -281,15 +280,15 @@ export default {
   .editable-loader,
   .editable-loader:before,
   .editable-loader:after {
-    background: #220014;
+    background: #999;
     -webkit-animation: load1 1s infinite ease-in-out;
     animation: load1 1s infinite ease-in-out;
-    width: 1em;
-    height: 4em;
+    width: 2px;
+    height: 2px;
   }
   .editable-loader {
     position: absolute;
-    color: #220014;
+    color: #999;
     text-indent: -9999em;
     margin: 3px;
     font-size: 1px;
@@ -308,12 +307,12 @@ export default {
     content: '';
   }
   .editable-loader:before {
-    left: -1.5em;
+    left: -5px;
     -webkit-animation-delay: -0.32s;
     animation-delay: -0.32s;
   }
   .editable-loader:after {
-    left: 1.5em;
+    left: 5px;
   }
   .editable-control {
     width: 100%;
@@ -348,11 +347,11 @@ export default {
     80%,
     100% {
       box-shadow: 0 0;
-      height: 30px;
+      height: 20px;
     }
     40% {
       box-shadow: 0 -2em;
-      height: 40px;
+      height: 5px;
     }
   }
   @keyframes load1 {
@@ -360,11 +359,11 @@ export default {
     80%,
     100% {
       box-shadow: 0 0;
-      height: 4em;
+      height: 10px;
     }
     40% {
       box-shadow: 0 -2em;
-      height: 5em;
+      height: 5px;
     }
   }
 </style>

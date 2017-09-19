@@ -27,5 +27,21 @@ new Vue({
 
 ```
 
+## Editable with Request
+```
+<editable value='resource_title' url='resource_url' attr='title' resource='resource_name' method='PUT'></editable>
+```
+if you finish a edit,you will send a request like:
+```
+Request URL:[resource_url]
+Request Method:PUT
+
+--------
+Request Payload
+resource:
+    title: 'your edit'
+
+```
+
 # Support Types
 **text**, **textarea**, **number**, **text**, **quill(rich text editor)**
