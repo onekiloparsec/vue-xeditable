@@ -1,6 +1,6 @@
 <template>
   <div class='vue_editable'>
-    <span v-show='!editable_mode && !loading' @click='toggle_editable_mode' v-bind:class='display_class()'>{{display_value()}}</span>
+    <span v-show='!editable_mode && !loading' @click='toggle_editable_mode' v-bind:class='display_class()' v-html='display_value()'></span>
     <div v-show='editable_mode && !loading' class='editable-control'>
       <input type="text"
             :value="val"
@@ -26,8 +26,9 @@
       <quill-editor v-model="val"
                     ref="myQuillEditor"
                     :options="editorOption"
-                    @blur="editable_changed">
-        </quill-editor>
+                    @blur="editable_changed"
+                    v-if='type == "wysihtml5"'>
+      </quill-editor>
     </div>
     <div class='editable-loader' v-show='loading'></div>
 
@@ -36,7 +37,9 @@
 
 <script>
 import Vue from 'vue'
-import { quillEditor } from 'vue-quill-editor'
+import Quill from 'quill'
+  
+import VueQuillEditor from 'vue-quill-editor'
 
 export default {
   name: 'editable',
@@ -44,7 +47,12 @@ export default {
     return this.$refs.myQuillEditor.quill
   },
   components: {
-    'quill-editor': quillEditor
+    'quill-editor': VueQuillEditor.quillEditor
+  },
+  computed: {
+    editor() {
+      return this.$refs.myQuillEditor.quill
+    }
   },
   props: {
     onblur: {
@@ -106,26 +114,34 @@ export default {
       type: String,
       required: false,
       default: ''
+    },
+    editorOption: {
+      type: Object,
+      default: function () {
+        return {
+          modules: {
+            toolbar: [
+              ['bold', 'italic', 'underline'],
+              [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+              [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+              ['clean']
+            ]
+          }
+        }
+      }
     }
-  },
-  created() {
   },
   data () {
     return {
       editable_mode: false,
       loading: false,
-      val: this.value,
-      editorOption: {
-        
-      }
+      val: this.value
     }
   },
   watch: {
     value(val) {
       this.val = val;
     }
-  },
-  created () {
   },
   methods: {
     display_class() {
@@ -150,13 +166,13 @@ export default {
       let that = this;
       if (this.editable_mode) {
         setTimeout(function() {
-          that.$emit('show');
           let inputs = e.target.nextElementSibling.children
           if (this.type == 'wysihtml5') {
             this.editor.focus()
           } else {
             for (let input of inputs) { input.focus() } 
           }
+          that.$emit('show');
         }, 100)
       } else {
         this.$emit('hide');
@@ -173,12 +189,20 @@ export default {
       case 'select':
         return el.value;
       case 'wysihtml5':
-        debugger
+        return this.editor.root.innerHTML;
       default:
         return ''
       }
     },
+    wysihtml5_blur_check(e) {
+      let not_bluring = this.type == 'wysihtml5' && this.editor.selection.savedRange.length;
+      return not_bluring || document.getElementsByClassName('ql-expanded').length;
+    },
     editable_changed(e) {
+      if (this.wysihtml5_blur_check(e)) {
+        this.editor.focus();
+        return
+      }
       let value = this.get_value(e.target)
       if (this.url && this.url.length) {
         this.request_url(value)
@@ -215,7 +239,6 @@ export default {
       }).then(response => {
         this.value_did_changed(value)
       }).error(error =>{
-        
         this.loading = false;
       });
     }

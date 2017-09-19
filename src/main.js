@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import axios from 'axios'
 import Editable from './Editable.vue'
-window.aa = new Vue({
+new Vue({
   el: '#app',
   components: {
     'editable': Editable
@@ -12,6 +12,6 @@ window.aa = new Vue({
     third: 1,
     forth: 1,
     options: [['Gold', 1], ['Silver', 2], ['Bronze', 3]],
-    fifth: 'Do not go gentle into that good night'
+    fifth: 'Do not go <strong style="color: rgb(230, 0, 0);"><em>gentle</em></strong> into that good night'
   }
 })
