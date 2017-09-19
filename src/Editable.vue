@@ -27,7 +27,7 @@
                     ref="myQuillEditor"
                     :options="editorOption"
                     @blur="editable_changed"
-                    v-if='type == "wysihtml5"'>
+                    v-if='type == "quill"'>
       </quill-editor>
     </div>
     <div class='editable-loader' v-show='loading'></div>
@@ -37,8 +37,8 @@
 
 <script>
 import Vue from 'vue'
+import axios from 'axios'
 import Quill from 'quill'
-  
 import VueQuillEditor from 'vue-quill-editor'
 
 export default {
@@ -167,10 +167,10 @@ export default {
       if (this.editable_mode) {
         setTimeout(function() {
           let inputs = e.target.nextElementSibling.children
-          if (this.type == 'wysihtml5') {
+          if (this.type == 'quill') {
             this.editor.focus()
           } else {
-            for (let input of inputs) { input.focus() } 
+            for (let input of inputs) { input.focus() }
           }
           that.$emit('show');
         }, 100)
@@ -188,18 +188,18 @@ export default {
       case 'number':
       case 'select':
         return el.value;
-      case 'wysihtml5':
+      case 'quill':
         return this.editor.root.innerHTML;
       default:
         return ''
       }
     },
-    wysihtml5_blur_check(e) {
-      let not_bluring = this.type == 'wysihtml5' && this.editor.selection.savedRange.length;
+    quill_blur_check(e) {
+      let not_bluring = this.type == 'quill' && this.editor.selection.savedRange.length;
       return not_bluring || document.getElementsByClassName('ql-expanded').length;
     },
     editable_changed(e) {
-      if (this.wysihtml5_blur_check(e)) {
+      if (this.quill_blur_check(e)) {
         this.editor.focus();
         return
       }

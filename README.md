@@ -10,3 +10,4 @@ install vue-editable
 npm install vue-xeditable --save
 ```
 
+
