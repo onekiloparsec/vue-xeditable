@@ -203,7 +203,7 @@ export default {
         return
       }
       let value = this.get_value(e.target)
-      if (this.url && this.url.length) {
+      if (this.url && this.url.length && value !== this.val) {
         this.send_request(value)
       } else {
         this.value_did_changed(value)
@@ -222,7 +222,6 @@ export default {
       this.loading = false;
     },
     send_request(value) {
-      if (value == this.val) { return }
       this.loading = true;
       let data = {}
       data[this.attr] = value
