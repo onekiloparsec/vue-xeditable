@@ -1,5 +1,6 @@
-var path = require('path')
-var webpack = require('webpack')
+const path = require('path')
+const webpack = require('webpack')
+const merge = require('webpack-merge')
 
 let commonConfig = {
   output: {
@@ -33,6 +34,11 @@ let commonConfig = {
         }
       }
     ]
+  },
+  externals: {
+    axios: 'axios',
+    vue: 'vue',
+    'vue-quill-editor': 'vue-quill-editor'
   },
   resolve: {
     alias: {
