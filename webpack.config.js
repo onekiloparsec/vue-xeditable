@@ -1,12 +1,9 @@
 var path = require('path')
 var webpack = require('webpack')
 
-module.exports = {
-  entry: './src/main.js',
+let commonConfig = {
   output: {
-    path: path.resolve(__dirname, './dist'),
-    publicPath: '/dist/',
-    filename: 'build.js'
+    path: path.resolve(__dirname, './dist')
   },
   module: {
     rules: [
@@ -51,6 +48,29 @@ module.exports = {
   },
   devtool: '#eval-source-map'
 }
+
+module.exports = [
+  // Config 1: for browser environment
+  merge(commonConfig, {
+    entry: path.resolve(__dirname + '/src/plugin.js'),
+    output: {
+      filename: 'vue-xeditable.min.js',
+      libraryTarget: 'window',
+      library: 'VueXEditable'
+    }
+  }),
+
+  // Config 2: for Node-based environment
+  merge(commonConfig, {
+    entry: path.resolve(__dirname + '/src/Editable.vue'),
+    output: {
+      filename: 'vue-xeditable.js',
+      libraryTarget: 'umd',
+      library: 'vue-xeditable',
+      umdNamedDefine: true
+    }
+  })
+]
 
 if (process.env.NODE_ENV === 'production') {
   module.exports.devtool = '#source-map'
