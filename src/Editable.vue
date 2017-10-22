@@ -94,6 +94,11 @@ export default {
       type: String,
       required: false,
     },
+    headers: {
+      type: Object,
+      required: false,
+      default: null
+    },
     title: {
       type: String,
       required: false,
@@ -233,7 +238,8 @@ export default {
       axios({
         method: this.method,
         url: this.url,
-        data: data
+        data: data,
+        headers: this.headers || {}
       }).then(response => {
         this.value_did_changed(value)
       }).catch(error =>{
