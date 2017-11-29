@@ -53,14 +53,6 @@
         </option>
       </select>
 
-      <quill-editor
-        v-model="val"
-        ref="myQuillEditor"
-        :options="editorOption"
-        @blur="editable_changed"
-        v-if='type == "quill"'
-      >
-      </quill-editor>
     </div>
 
     <div class='editable-loader' v-show='loading'></div>
@@ -71,17 +63,9 @@
 <script>
   import Vue from 'vue'
   import axios from 'axios'
-  import Quill from 'quill'
-  import VueQuillEditor from 'vue-quill-editor'
 
   export default {
     name: 'vue-xeditable',
-    editor () {
-      return this.$refs.myQuillEditor.quill
-    },
-    components: {
-      'quill-editor': VueQuillEditor.quillEditor
-    },
     props: {
       onblur: {
         type: Function,
@@ -147,21 +131,6 @@
         type: String,
         required: false,
         default: ''
-      },
-      editorOption: {
-        type: Object,
-        default: function () {
-          return {
-            modules: {
-              toolbar: [
-                ['bold', 'italic', 'underline'],
-                [{'list': 'ordered'}, {'list': 'bullet'}],
-                [{'color': []}, {'background': []}],          // dropdown with defaults from theme
-                ['clean']
-              ]
-            }
-          }
-        }
       }
     },
     data () {
@@ -177,9 +146,6 @@
       }
     },
     computed: {
-      editor () {
-        return this.$refs.myQuillEditor.quill
-      },
       $_VueXeditable_isValueEmpty () {
         return this.val === null || this.val === ''
       }
@@ -202,12 +168,8 @@
         if (this.editable_mode) {
           setTimeout(function () {
             let inputs = e.target.nextElementSibling.children
-            if (this.type == 'quill') {
-              this.editor.focus()
-            } else {
-              for (let input of inputs) {
-                input.focus()
-              }
+            for (let input of inputs) {
+              input.focus()
             }
             that.$emit('show')
           }, 100)
@@ -225,21 +187,11 @@
           case 'number':
           case 'select':
             return el.value
-          case 'quill':
-            return this.editor.root.innerHTML
           default:
             return ''
         }
       },
-      quill_blur_check (e) {
-        let not_bluring = this.type == 'quill' && this.editor.selection.savedRange.length
-        return not_bluring || document.getElementsByClassName('ql-expanded').length
-      },
       editable_changed (e) {
-        if (this.quill_blur_check(e)) {
-          this.editor.focus()
-          return
-        }
         let value = this.get_value(e.target)
         if (this.url && this.url.length && value !== this.val) {
           this.send_request(value)
