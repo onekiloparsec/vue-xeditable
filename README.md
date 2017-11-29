@@ -1,12 +1,8 @@
 # vue-xeditable
-[![](https://badge.juejin.im/entry/59c08ef5f265da065d2b6821/likes.svg?style=flat-square)](https://juejin.im/post/59c08ed2f265da06611f67c4)
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://raw.githubusercontent.com/Kar-Wai-Wong/vue-xeditable/master/LICENSE)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://raw.githubusercontent.com/onekiloparsec/vue-xeditable/master/LICENSE)
 
 
-Better editable element in Vue
-
-# Example
-[DEMO PAGE](https://kar-wai-wong.github.io/vue-xeditable/)
+Even better editable element in Vue. Original code from https://kar-wai-wong.github.io
 
 # Use Setup
 
