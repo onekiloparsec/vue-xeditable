@@ -68,7 +68,7 @@ module.exports = [
 
   // Config 2: for Node-based environment
   merge(commonConfig, {
-    entry: path.resolve(__dirname + '/src/Editable.vue'),
+    entry: path.resolve(__dirname + '/src/XEditable.vue'),
     output: {
       filename: 'vue-xeditable.js',
       libraryTarget: 'umd',
