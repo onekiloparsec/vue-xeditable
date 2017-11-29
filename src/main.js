@@ -1,9 +1,9 @@
 import Vue from 'vue'
-import Editable from './Editable.vue'
+import XEditable from './XEditable.vue'
 new Vue({
   el: '#app',
   components: {
-    'editable': Editable
+    'xeditable': XEditable
   },
   data: {
     first: 'Do not go gentle into that good night',
