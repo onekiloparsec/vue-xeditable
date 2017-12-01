@@ -150,6 +150,9 @@
         return this.rawValue
       },
       $_VueXeditable_onKeydown (e) {
+        if (!this.isEditing) {
+          return
+        }
         if (e.keyCode === 13) {
           this.$_VueXeditable_stopEditing(e)
           this.$_VueXeditable_valueDidChange(e.target.value)

@@ -26,48 +26,48 @@
 
   <div class='content'>
     <div>
-      <!--<h4>Single piece of text (default: type = text)</h4>-->
-      <!--<pre v-pre>&lt;vue-xeditable :value.sync='{{textValue}}'&gt;&lt;/vue-xeditable&gt;</pre>-->
-      <!--<vue-xeditable-->
-        <!--type="text"-->
-        <!--:value.sync='textValue'-->
-        <!--@start-editing="sendStartEditingEvent"-->
-        <!--@stop-editing="sendStopEditingEvent"-->
-        <!--@value-will-change="sendValueWillChangeEvent"-->
-        <!--@value-did-change="sendValueDidChangeEvent"-->
-      <!--&gt;-->
-      <!--</vue-xeditable>-->
+      <h4>Single piece of text (default: type = text)</h4>
+      <pre v-pre>&lt;vue-xeditable :value.sync='{{textValue}}'&gt;&lt;/vue-xeditable&gt;</pre>
+      <vue-xeditable
+        type="text"
+        :value.sync='textValue'
+        @start-editing="sendStartEditingEvent"
+        @stop-editing="sendStopEditingEvent"
+        @value-will-change="sendValueWillChangeEvent"
+        @value-did-change="sendValueDidChangeEvent"
+      >
+      </vue-xeditable>
 
-      <!--<div id="events-banner" v-show="events.length > 0">-->
-        <!--<div-->
-          <!--class="events-banner-event"-->
-          <!--v-for="(event, index) in events"-->
-        <!--&gt;-->
-          <!--<span class="prefix">Event {{event.index}}:</span>-->
-          <!--<span class="content">{{event.message}}</span>-->
-          <!--<span class="value">'{{event.value}}'</span>-->
-        <!--</div>-->
-      <!--</div>-->
+      <div class="events-banner" v-show="events.length > 0">
+        <div
+          class="events-banner-event"
+          v-for="(event, index) in events"
+        >
+          <span class="prefix">Event {{event.index}}:</span>
+          <span class="content">{{event.message}}</span>
+          <span class="value">'{{event.value}}'</span>
+        </div>
+      </div>
 
-      <!--<h4>Single piece of text with null value, showing empty</h4>-->
-      <!--<pre v-pre>&lt;vue-xeditable :value.sync='{{nullValue}}' empty='Custom Empty Text'&gt;&lt;/vue-xeditable&gt;</pre>-->
-      <!--<vue-xeditable type="text" :value='nullValue' empty="Custom Empty Text"></vue-xeditable>-->
+      <h4>Single piece of text with null value, showing empty</h4>
+      <pre v-pre>&lt;vue-xeditable :value.sync='{{nullValue}}' empty='Custom Empty Text'&gt;&lt;/vue-xeditable&gt;</pre>
+      <vue-xeditable type="text" :value='nullValue' empty="Custom Empty Text"></vue-xeditable>
 
-      <!--<h4>Mutiple lines text area</h4>-->
-      <!--<pre-->
-        <!--v-pre>&lt;vue-xeditable type='textarea' :value.sync='{{textareaValue}}' type='textarea'></vue-xeditable></pre>-->
-      <!--<vue-xeditable :value.sync="textareaValue" type='textarea'></vue-xeditable>-->
+      <h4>Mutiple lines text area</h4>
+      <pre
+        v-pre>&lt;vue-xeditable type='textarea' :value.sync='{{textareaValue}}' type='textarea'></vue-xeditable></pre>
+      <vue-xeditable :value.sync="textareaValue" type='textarea'></vue-xeditable>
 
-      <!--<h4>Editable number (integers, floats)</h4>-->
-      <!--<pre v-pre>&lt;editable type='number' value={{numberValue}}&gt;&lt;/editable&gt;</pre>-->
-      <!--<vue-xeditable type='number' :value.sync='numberValue'></vue-xeditable>-->
+      <h4>Editable number (integers, floats)</h4>
+      <pre v-pre>&lt;editable type='number' value={{numberValue}}&gt;&lt;/editable&gt;</pre>
+      <vue-xeditable type='number' :value.sync='numberValue'></vue-xeditable>
 
       <h4>Editable options (starting with a null value)</h4>
       <pre>options = {{JSON.stringify(selectOptions)}}</pre>
       <pre v-pre>&lt;vue-xeditable type='select' value={{selectValue}} :options='selectOptions'&gt;&lt;/vue-xeditable&gt;</pre>
       <vue-xeditable
         type='select'
-        :value.sync='selectValue'
+        :value='selectValue'
         :options='selectOptions'
         @start-editing="sendStartEditingEvent"
         @stop-editing="sendStopEditingEvent"
@@ -78,7 +78,7 @@
       <br/>
       Selected value is: {{selectValue}}
 
-      <div id="events-banner" v-show="events.length > 0">
+      <div class="events-banner" v-show="events.length > 0">
         <div
           class="events-banner-event"
           v-for="(event, index) in events"
@@ -155,22 +155,22 @@
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
   }
 
-  #events-banner {
+  .events-banner {
     padding: 5px;
     font-size: small;
     display: block;
   }
 
-  #events-banner .prefix {
+  .events-banner .prefix {
     color: #858585;
   }
 
-  #events-banner .content {
+  .events-banner .content {
     font-weight: bold;
     color: #273080;
   }
 
-  #events-banner .value {
+  .events-banner .value {
     color: #3a5831;
     font-size: larger;
   }
