@@ -26,17 +26,57 @@
 
   <div class='content'>
     <div>
-      <h4>Single piece of text (default: type = text)</h4>
-      <pre v-pre>&lt;vue-x-editable :value.sync='{{textValue}}'&gt;&lt;/vue-x-editable&gt;</pre>
+      <!--<h4>Single piece of text (default: type = text)</h4>-->
+      <!--<pre v-pre>&lt;vue-x-editable :value.sync='{{textValue}}'&gt;&lt;/vue-x-editable&gt;</pre>-->
+      <!--<vue-x-editable-->
+        <!--type="text"-->
+        <!--:value.sync='textValue'-->
+        <!--@start-editing="sendStartEditingEvent"-->
+        <!--@stop-editing="sendStopEditingEvent"-->
+        <!--@value-will-change="sendValueWillChangeEvent"-->
+        <!--@value-did-change="sendValueDidChangeEvent"-->
+      <!--&gt;-->
+      <!--</vue-x-editable>-->
+
+      <!--<div id="events-banner" v-show="events.length > 0">-->
+        <!--<div-->
+          <!--class="events-banner-event"-->
+          <!--v-for="(event, index) in events"-->
+        <!--&gt;-->
+          <!--<span class="prefix">Event {{event.index}}:</span>-->
+          <!--<span class="content">{{event.message}}</span>-->
+          <!--<span class="value">'{{event.value}}'</span>-->
+        <!--</div>-->
+      <!--</div>-->
+
+      <!--<h4>Single piece of text with null value, showing empty</h4>-->
+      <!--<pre v-pre>&lt;vue-x-editable :value.sync='{{nullValue}}' empty='Custom Empty Text'&gt;&lt;/vue-x-editable&gt;</pre>-->
+      <!--<vue-x-editable type="text" :value='nullValue' empty="Custom Empty Text"></vue-x-editable>-->
+
+      <!--<h4>Mutiple lines text area</h4>-->
+      <!--<pre-->
+        <!--v-pre>&lt;vue-x-editable type='textarea' :value.sync='{{textareaValue}}' type='textarea'></vue-x-editable></pre>-->
+      <!--<vue-x-editable :value.sync="textareaValue" type='textarea'></vue-x-editable>-->
+
+      <!--<h4>Editable number (integers, floats)</h4>-->
+      <!--<pre v-pre>&lt;editable type='number' value={{numberValue}}&gt;&lt;/editable&gt;</pre>-->
+      <!--<vue-x-editable type='number' :value.sync='numberValue'></vue-x-editable>-->
+
+      <h4>Editable options (starting with a null value)</h4>
+      <pre>options = {{JSON.stringify(selectOptions)}}</pre>
+      <pre v-pre>&lt;vue-x-editable type='select' value={{selectValue}} :options='selectOptions'&gt;&lt;/vue-x-editable&gt;</pre>
       <vue-x-editable
-        type="text"
-        :value.sync='textValue'
+        type='select'
+        :value.sync='selectValue'
+        :options='selectOptions'
         @start-editing="sendStartEditingEvent"
         @stop-editing="sendStopEditingEvent"
         @value-will-change="sendValueWillChangeEvent"
         @value-did-change="sendValueDidChangeEvent"
       >
       </vue-x-editable>
+      <br/>
+      Selected value is: {{selectValue}}
 
       <div id="events-banner" v-show="events.length > 0">
         <div
@@ -49,24 +89,6 @@
         </div>
       </div>
 
-      <h4>Single piece of text with null value, showing empty</h4>
-      <pre v-pre>&lt;vue-x-editable :value.sync='{{nullValue}}' empty='Custom Empty Text'&gt;&lt;/vue-x-editable&gt;</pre>
-      <vue-x-editable type="text" :value='nullValue' empty="Custom Empty Text"></vue-x-editable>
-
-      <h4>Mutiple lines text area</h4>
-      <pre
-        v-pre>&lt;vue-x-editable type='textarea' :value.sync='{{textareaValue}}' type='textarea'></vue-x-editable></pre>
-      <vue-x-editable :value.sync="textareaValue" type='textarea'></vue-x-editable>
-
-      <h4>Editable number (integers, floats)</h4>
-      <pre v-pre>&lt;editable type='number' value={{numberValue}}&gt;&lt;/editable&gt;</pre>
-      <vue-x-editable type='number' :value.sync='numberValue'></vue-x-editable>
-
-      <h4>Editable options (starting with a null value)</h4>
-      <pre>options = {{JSON.stringify(selectOptions)}}</pre>
-      <pre v-pre>&lt;vue-x-editable type='select' value={{selectValue}} :options='selectOptions'&gt;&lt;/vue-x-editable&gt;</pre>
-      <vue-x-editable type='select' :value.sync='selectValue' :options='selectOptions'></vue-x-editable>
-      Selected value is: {{selectValue}}
     </div>
   </div>
 </div>
@@ -92,19 +114,19 @@
       selectOptions: [['Gold', 1], ['Silver', 2], ['Bronze', 3]],
     },
     methods: {
-      sendStartEditingEvent(event, value) {
-        this.pushEditingEvent('start-editing', event, value)
+      sendStartEditingEvent(value) {
+        this.pushEditingEvent('start-editing', value)
       },
-      sendStopEditingEvent(event, value) {
-        this.pushEditingEvent('stop-editing', event, value)
+      sendStopEditingEvent(value) {
+        this.pushEditingEvent('stop-editing', value)
       },
-      sendValueWillChangeEvent(event, value) {
-        this.pushEditingEvent('value-will-change', event, value)
+      sendValueWillChangeEvent(value) {
+        this.pushEditingEvent('value-will-change', value)
       },
-      sendValueDidChangeEvent(event, value) {
-        this.pushEditingEvent('value-did-change', event, value)
+      sendValueDidChangeEvent(value) {
+        this.pushEditingEvent('value-did-change', value)
       },
-      pushEditingEvent (name, event, value) {
+      pushEditingEvent (name, value) {
         this.eventsCount += 1
         this.events.push({index: this.eventsCount, message: name, value: value})
         setTimeout(() => {

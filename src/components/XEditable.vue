@@ -38,18 +38,16 @@
         class='vue-form-control'
       >
 
-      <select
-        @change='$_VueXeditable_valueDidChange'
+      <x-custom-select
+        type="select"
+        v-model="rawValue"
+        :options="$_VueXeditable_rawOptions"
+        @input='$_VueXeditable_valueDidChange'
+        @keydown="$_VueXeditable_onKeydown"
         v-else-if='type === "select"'
         class='vue-form-control'
       >
-        <option
-          v-for='option in options'
-          :value="option[1]"
-        >
-          {{option[0]}}
-        </option>
-      </select>
+      </x-custom-select>
 
     </div>
 
@@ -61,9 +59,13 @@
 <script>
   import Vue from 'vue'
   import axios from 'axios'
+  import XCustomSelect from './XCustomSelect.vue'
+
+  const $_VueXeditable_emptyOptionValue = -999999999
 
   export default {
     name: 'vue-xeditable',
+    components: {XCustomSelect},
     props: {
       value: {
         type: [String, Number]
@@ -84,7 +86,14 @@
         default: ''
       },
       options: {
-        type: Array
+        type: Array,
+        default: function () {
+          return []
+        }
+      },
+      allowEmptyOption: {
+        type: Boolean,
+        default: true
       },
       remote: {
         type: Object,
@@ -104,7 +113,8 @@
       return {
         isEditing: false,
         isRemoteUpdating: false,
-        rawValue: this.value
+        rawValue: this.value,
+        initialSelectValue: this.value
       }
     },
     watch: {
@@ -121,6 +131,9 @@
       },
       $_VueXeditable_hasValidRemote () {
         return this.$_VueXeditable_hasRemoteUpdate() && ['PUT', 'POST'].includes(this.remote.method.toUpperCase())
+      },
+      $_VueXeditable_rawOptions () {
+        return (this.allowEmptyOption) ? [[this.empty, $_VueXeditable_emptyOptionValue]].concat(this.options) : this.options
       }
     },
     methods: {
@@ -130,7 +143,7 @@
         }
         if (this.type === 'select') {
           let opt = this.options.find(o => {
-            return option[1] === this.rawValue
+            return o === this.rawValue
           })
           return opt[0]
         }
@@ -139,7 +152,7 @@
       $_VueXeditable_onKeydown (e) {
         if (e.keyCode === 13) {
           this.$_VueXeditable_stopEditing(e)
-          this.$_VueXeditable_valueDidChange(e)
+          this.$_VueXeditable_valueDidChange(e.target.value)
         }
         else if (e.keyCode === 27) {
           this.$_VueXeditable_stopEditing(e)
@@ -148,7 +161,7 @@
       $_VueXeditable_startEditing (e) {
         this.isEditing = true
         let that = this
-        that.$emit('start-editing', e, this.rawValue)
+        that.$emit('start-editing', this.rawValue)
         setTimeout(function () {
           let inputs = Array.from(e.target.nextElementSibling.children)
           inputs.forEach(i => {
@@ -158,28 +171,32 @@
       },
       $_VueXeditable_stopEditing (e) {
         this.isEditing = false
-        this.$emit('stop-editing', e, this.rawValue)
+        let v = (this.type === 'select') ? this.initialSelectValue : this.rawValue
+        this.$emit('stop-editing', v)
       },
-      $_VueXeditable_valueDidChange (e) {
-        let newValue = e.target.value
-        if (this.$_VueXeditable_hasValueChanged(newValue)) {
-          this.$emit('value-will-change', e, this.rawValue)
+      $_VueXeditable_valueDidChange (newValue) {
+        if (this.type === 'select') {
+          this.$_VueXeditable_stopEditing() // Needed because no events can be associated with select / option?...
+        }
+        if (this.$_VueXeditable_hasValueChanged(newValue) || this.type === 'select') {
+          let v = (this.type === 'select') ? this.initialSelectValue : this.rawValue
+          this.$emit('value-will-change', v)
 
           if (this.$_VueXeditable_hasRemoteUpdate) {
             if (this.$_VueXeditable_hasValidRemote) {
               this.$_VueXeditable_sendRemoteUpdate(newValue)
                 .then(() => {
-                  this.$emit('value-did-change', e, newValue)
+                  this.$emit('value-did-change', newValue)
                 })
                 .catch((error) => {
-                  this.$emit('value-remote-update-error', e, newValue, error)
+                  this.$emit('value-remote-update-error', newValue, error)
                 })
             } else {
               console.error('VueXEditable Error: Invalid Remote Update configuration.')
             }
           } else {
             this.$_VueXeditable_makeLocalUpdate(newValue)
-            this.$emit('value-did-change', e, newValue)
+            this.$emit('value-did-change', newValue)
           }
         }
       },
@@ -187,7 +204,15 @@
         return newValue !== this.rawValue
       },
       $_VueXeditable_makeLocalUpdate (newValue) {
-        this.rawValue = newValue
+        // For select types, the value has already changed...
+        if (this.type === 'select') {
+          if (newValue[1] === $_VueXeditable_emptyOptionValue) {
+            this.rawValue = null
+          }
+          this.initialSelectValue = this.rawValue
+        } else {
+          this.rawValue = newValue
+        }
       },
       $_VueXeditable_sendRemoteUpdate (newValue) {
         let payload = {}
