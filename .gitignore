@@ -1,21 +1,11 @@
-.DS_Store
-node_modules/
-npm-debug.log
-yarn-error.log
-
-# Editor directories and files
-.idea
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-
 # Logs
 logs
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+.DS_Store
 
 # Runtime data
 pids
@@ -68,3 +58,7 @@ typings/
 
 # dotenv environment variables file
 .env
+
+# JetBrains
+.idea
+

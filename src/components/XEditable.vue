@@ -20,6 +20,7 @@
         @keydown='keydown'
         v-if='type == "text"'
         class='vue-form-control'
+        autofocus
       >
 
       <textarea
@@ -152,13 +153,14 @@
     },
     methods: {
       display_value () {
-        if (this.val == null || this.val == '') {
+        if (this.$_VueXeditable_isValueEmpty) {
           return this.empty
         }
-        if (this.type == 'select') {
-          for (let option of this.options) {
-            if (option[1] == this.val) return option[0]
-          }
+        if (this.type === 'select') {
+          let opt = this.options.find(o => {
+            return option[1] === this.val
+          })
+          return opt[0]
         }
         return this.val
       },
@@ -168,9 +170,9 @@
         if (this.editable_mode) {
           setTimeout(function () {
             let inputs = e.target.nextElementSibling.children
-            for (let input of inputs) {
-              input.focus()
-            }
+            inputs.forEach(i => {
+              i.focus()
+            })
             that.$emit('show')
           }, 100)
         } else {
@@ -178,7 +180,7 @@
         }
       },
       keydown (e) {
-        if (e.keyCode == 13) this.editable_changed(e)
+        if (e.keyCode === 13) this.editable_changed(e)
       },
       get_value (el) {
         switch (this.type) {
@@ -235,7 +237,7 @@
   }
 </script>
 
-<style>
+<style scoped>
   .vue-xeditable {
     width: auto;
     color: #222;
