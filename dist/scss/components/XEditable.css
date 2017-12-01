@@ -224,20 +224,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .vue-xeditable {
   width: auto;
   color: #222;
@@ -265,11 +251,11 @@
   outline: none;
 }
 
-.vue-xeditable .value {
+.vue-xeditable-value {
   white-space: pre-wrap;
 }
 
-.vue-xeditable .empty {
+.vue-xeditable-empty {
   color: #ea0002;
   font-style: italic;
 }

@@ -22,49 +22,57 @@
 
 <div id="app">
   <h1>Vue.js x-editable</h1>
-  <h5>
-    Better editable element in Vue 2.x
-  </h5>
+  <h3>Better editable element in Vue 2.x</h3>
+
   <div class='content'>
-    <h4>
-      Single piece of text
-    </h4>
+    <div>
+      <h4>Single piece of text (default: type = text)</h4>
+      <pre v-pre>&lt;vue-x-editable :value.sync='{{textValue}}'&gt;&lt;/vue-x-editable&gt;</pre>
+      <vue-x-editable
+        type="text"
+        :value.sync='textValue'
+        @start-editing="sendStartEditingEvent"
+        @stop-editing="sendStopEditingEvent"
+        @value-will-change="sendValueWillChangeEvent"
+        @value-did-change="sendValueDidChangeEvent"
+      >
+      </vue-x-editable>
 
-    <pre>&lt;vue-x-editable value.sync='{{first}}'&gt;&lt;/vue-x-editable&gt;</pre>
+      <div id="events-banner" v-show="events.length > 0">
+        <div
+          class="events-banner-event"
+          v-for="(event, index) in events"
+        >
+          <span class="prefix">Event {{event.index}}:</span>
+          <span class="content">{{event.message}}</span>
+          <span class="value">'{{event.value}}'</span>
+        </div>
+      </div>
 
-    <vue-x-editable
-      type="text"
-      :value.sync='first'
-    >
-    </vue-x-editable>
+      <h4>Single piece of text with null value, showing empty</h4>
+      <pre v-pre>&lt;vue-x-editable :value.sync='{{nullValue}}' empty='Custom Empty Text'&gt;&lt;/vue-x-editable&gt;</pre>
+      <vue-x-editable type="text" :value='nullValue' empty="Custom Empty Text"></vue-x-editable>
 
-    <!--<h4>-->
-      <!--Mutiple line text Editable-->
-    <!--</h4>-->
-    <!--<pre>&lt;script&gt;second = '{{second}}'&lt;/script&gt;</br>&lt;editable :value="{{second}}" type='textarea'&gt;&lt;/editable&gt;</pre>-->
-    <!--<vue-x-editable :value.sync="second" type='textarea'></vue-x-editable>-->
-    <!--&lt;!&ndash; <editable value='tester'></editable> &ndash;&gt;-->
-    <!--<h4>-->
-      <!--Number Editable-->
-    <!--</h4>-->
-    <!--<pre>&lt;editable type='number' value={{third}}&gt;&lt;/editable&gt;</pre>-->
-    <!--<vue-x-editable :value.sync='third' type='number'></vue-x-editable>-->
+      <h4>Mutiple lines text area</h4>
+      <pre
+        v-pre>&lt;vue-x-editable type='textarea' :value.sync='{{textareaValue}}' type='textarea'></vue-x-editable></pre>
+      <vue-x-editable :value.sync="textareaValue" type='textarea'></vue-x-editable>
 
-    <!--<h4>-->
-      <!--Select Editable-->
-    <!--</h4>-->
-    <!--<pre>&lt;script&gt;options = {{JSON.stringify(options)}}&lt;/script&gt;</br>&lt;editable type='select' value={{forth}} :options='options'&gt;&lt;/editable&gt;</pre>-->
-    <!--<vue-x-editable :value.sync='forth' type='select' :options='options'></vue-x-editable>-->
-    <!--value is {{forth}}-->
+      <h4>Editable number (integers, floats)</h4>
+      <pre v-pre>&lt;editable type='number' value={{numberValue}}&gt;&lt;/editable&gt;</pre>
+      <vue-x-editable type='number' :value.sync='numberValue'></vue-x-editable>
+
+      <h4>Editable options (starting with a null value)</h4>
+      <pre>options = {{JSON.stringify(selectOptions)}}</pre>
+      <pre v-pre>&lt;vue-x-editable type='select' value={{selectValue}} :options='selectOptions'&gt;&lt;/vue-x-editable&gt;</pre>
+      <vue-x-editable type='select' :value.sync='selectValue' :options='selectOptions'></vue-x-editable>
+      Selected value is: {{selectValue}}
+    </div>
   </div>
 </div>
 
-<script src='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js'></script>
-<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
 <script src="https://unpkg.com/vue"></script>
-<script src="node_modules/axios/dist/axios.min.js"></script>
 <script src="dist/vue-xeditable.umd.js"></script>
-
 
 <script type="text/javascript">
   Vue.use(VueXEditable)
@@ -73,24 +81,37 @@
     el: '#app',
     components: {},
     data: {
+      eventsCount: 0,
+      events: [],
       display: false,
-      first: 'This is an editable text.',
-      second: 'second',
-      updateList: [],
-      value1: 'Do not go gentle into that good night',
-      value2: "Do not go gentle into that good night, \n\Old age should burn and rave at close of day; \n\Rage, rage against the dying of the light.",
-      value3: 'Do not go <strong><em>gentle</em></strong> into that good night',
-      third: 1,
-      forth: 1,
-      options: [['Gold', 1], ['Silver', 2], ['Bronze', 3]],
+      nullValue: null,
+      textValue: 'This is an editable text.',
+      textareaValue: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+      numberValue: 1,
+      selectValue: null,
+      selectOptions: [['Gold', 1], ['Silver', 2], ['Bronze', 3]],
+    },
+    methods: {
+      sendStartEditingEvent(event, value) {
+        this.pushEditingEvent('start-editing', event, value)
+      },
+      sendStopEditingEvent(event, value) {
+        this.pushEditingEvent('stop-editing', event, value)
+      },
+      sendValueWillChangeEvent(event, value) {
+        this.pushEditingEvent('value-will-change', event, value)
+      },
+      sendValueDidChangeEvent(event, value) {
+        this.pushEditingEvent('value-did-change', event, value)
+      },
+      pushEditingEvent (name, event, value) {
+        this.eventsCount += 1
+        this.events.push({index: this.eventsCount, message: name, value: value})
+        setTimeout(() => {
+          this.events.shift()
+        }, 60000)
+      }
     }
-  })
-
-  $(document).ready(function () {
-    $('code').each(function (i, block) {
-      block.innerText = block.attributes.highlightjs.value
-      hljs.highlightBlock(block)
-    })
   })
 </script>
 
@@ -101,7 +122,7 @@
   }
 
   #app {
-    width: 680px;
+    width: 90%;
     padding: 15px 25px;
     margin: 60px auto;
     position: relative;
@@ -112,7 +133,37 @@
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
   }
 
-  .vue-editable-value {
+  #events-banner {
+    padding: 5px;
+    font-size: small;
+    display: block;
+  }
+
+  #events-banner .prefix {
+    color: #858585;
+  }
+
+  #events-banner .content {
+    font-weight: bold;
+    color: #273080;
+  }
+
+  #events-banner .value {
+    color: #3a5831;
+    font-size: larger;
+  }
+
+  .events-banner-event {
+    background-color: #f9f9f9;
+    margin: 2px;
+    padding: 10px;
+    display: inline-block;
+    clear: left;
+    width: auto;
+  }
+
+  .vue-xeditable-value {
+    cursor: pointer;
     color: #17c;
     border-bottom: 1px dashed #07c;
     line-height: 22px;
@@ -124,8 +175,10 @@
     color: #42b983;
   }
 
-  h5 {
-    color: #555;
+  h4 {
+    padding-top: 10px;
+    margin-bottom: 0;
+    color: #404040;
   }
 
   a {
@@ -165,11 +218,6 @@
     border: none;
   }
 
-  .content {
-
-  }
-
 </style>
 </body>
-
 </html>

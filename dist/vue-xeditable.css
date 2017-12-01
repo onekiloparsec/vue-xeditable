@@ -25,11 +25,11 @@
   outline: none;
 }
 
-.vue-xeditable .value[data-v-cd131608] {
+.vue-xeditable-value[data-v-cd131608] {
   white-space: pre-wrap;
 }
 
-.vue-xeditable .empty[data-v-cd131608] {
+.vue-xeditable-empty[data-v-cd131608] {
   color: #ea0002;
   font-style: italic;
 }

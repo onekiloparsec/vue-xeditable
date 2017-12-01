@@ -1,49 +1,46 @@
 <template>
   <div class='vue-xeditable'>
     <span
-      class="value"
-      :class="{'empty': $_VueXeditable_isValueEmpty}"
-      v-show='!editable_mode && !loading'
-      @click='toggle_editable_mode'
-      v-html='display_value()'>
+      class="vue-xeditable-value"
+      :class="{'vue-xeditable-empty': $_VueXeditable_isValueEmpty}"
+      v-show='!isEditing && !isRemoteUpdating'
+      @click='$_VueXeditable_startEditing'
+      v-html='$_VueXeditable_getHTMLValue()'>
     </span>
 
     <div
-      v-show='editable_mode && !loading'
+      v-show='isEditing && !isRemoteUpdating'
       class='vue-xeditable-control'
     >
 
       <input
         type="text"
-        :value="val"
-        @blur='editable_changed'
-        @keydown='keydown'
-        v-if='type == "text"'
+        :value="rawValue"
+        @keydown='$_VueXeditable_onKeydown'
+        v-if='type === "text"'
         class='vue-form-control'
         autofocus
       >
 
       <textarea
-        @blur='editable_changed'
-        @keydown='keydown'
-        v-else-if='type == "textarea"'
+        @keydown='$_VueXeditable_onKeydown'
+        v-else-if='type === "textarea"'
         class='vue-form-control'
       >
-        {{val}}
+        {{rawValue}}
       </textarea>
 
       <input
         type="number"
-        :value="val"
-        @blur='editable_changed'
-        @keydown='keydown'
-        v-if='type == "number"'
+        :value="rawValue"
+        @keydown='$_VueXeditable_onKeydown'
+        v-else-if='type === "number"'
         class='vue-form-control'
       >
 
       <select
-        @change='editable_changed'
-        v-if='type == "select"'
+        @change='$_VueXeditable_valueDidChange'
+        v-else-if='type === "select"'
         class='vue-form-control'
       >
         <option
@@ -56,7 +53,7 @@
 
     </div>
 
-    <div class='editable-loader' v-show='loading'></div>
+    <div class='editable-loader' v-show='isRemoteUpdating'></div>
 
   </div>
 </template>
@@ -68,60 +65,13 @@
   export default {
     name: 'vue-xeditable',
     props: {
-      onblur: {
-        type: Function,
-        required: false,
-        default: function () {
-        }
-      },
       value: {
         type: [String, Number]
-      },
-      height: {
-        type: Number,
-        default: 350
-      },
-      attr: {
-        type: String,
-        required: false,
-        default: ''
-      },
-      method: {
-        type: String,
-        required: false,
-        default: 'POST'
-      },
-      options: {
-        type: Array
-      },
-      resource: {
-        type: String,
-        required: false,
-        default: null
       },
       type: {
         type: String,
         required: false,
         default: 'text'
-      },
-      url: {
-        type: String,
-        required: false,
-      },
-      headers: {
-        type: Object,
-        required: false,
-        default: null
-      },
-      title: {
-        type: String,
-        required: false,
-        default: ''
-      },
-      clear: {
-        type: Boolean,
-        required: false,
-        default: false
       },
       empty: {
         type: String,
@@ -132,105 +82,141 @@
         type: String,
         required: false,
         default: ''
+      },
+      options: {
+        type: Array
+      },
+      remote: {
+        type: Object,
+        required: false,
+        default: function () {
+          return {
+            url: null,
+            method: 'PUT',
+            key: null,
+            resource: null,
+            headers: null
+          }
+        }
       }
     },
     data () {
       return {
-        editable_mode: false,
-        loading: false,
-        val: this.value
+        isEditing: false,
+        isRemoteUpdating: false,
+        rawValue: this.value
       }
     },
     watch: {
-      value (val) {
-        this.val = val
+      value (newValue) {
+        this.rawValue = newValue
       }
     },
     computed: {
       $_VueXeditable_isValueEmpty () {
-        return this.val === null || this.val === ''
+        return this.rawValue === null || this.rawValue === undefined || this.rawValue === ''
+      },
+      $_VueXeditable_hasRemoteUpdate () {
+        return this.remote && this.remote.url && this.remote.url.length && this.remote.key && this.remote.key.length
+      },
+      $_VueXeditable_hasValidRemote () {
+        return this.$_VueXeditable_hasRemoteUpdate() && ['PUT', 'POST'].includes(this.remote.method.toUpperCase())
       }
     },
     methods: {
-      display_value () {
+      $_VueXeditable_getHTMLValue () {
         if (this.$_VueXeditable_isValueEmpty) {
           return this.empty
         }
         if (this.type === 'select') {
           let opt = this.options.find(o => {
-            return option[1] === this.val
+            return option[1] === this.rawValue
           })
           return opt[0]
         }
-        return this.val
+        return this.rawValue
       },
-      toggle_editable_mode (e) {
-        this.editable_mode = !this.editable_mode
+      $_VueXeditable_onKeydown (e) {
+        if (e.keyCode === 13) {
+          this.$_VueXeditable_stopEditing(e)
+          this.$_VueXeditable_valueDidChange(e)
+        }
+        else if (e.keyCode === 27) {
+          this.$_VueXeditable_stopEditing(e)
+        }
+      },
+      $_VueXeditable_startEditing (e) {
+        this.isEditing = true
         let that = this
-        if (this.editable_mode) {
-          setTimeout(function () {
-            let inputs = e.target.nextElementSibling.children
-            inputs.forEach(i => {
-              i.focus()
+        that.$emit('start-editing', e, this.rawValue)
+        setTimeout(function () {
+          let inputs = Array.from(e.target.nextElementSibling.children)
+          inputs.forEach(i => {
+            i.focus()
+          })
+        }, 100)
+      },
+      $_VueXeditable_stopEditing (e) {
+        this.isEditing = false
+        this.$emit('stop-editing', e, this.rawValue)
+      },
+      $_VueXeditable_valueDidChange (e) {
+        let newValue = e.target.value
+        if (this.$_VueXeditable_hasValueChanged(newValue)) {
+          this.$emit('value-will-change', e, this.rawValue)
+
+          if (this.$_VueXeditable_hasRemoteUpdate) {
+            if (this.$_VueXeditable_hasValidRemote) {
+              this.$_VueXeditable_sendRemoteUpdate(newValue)
+                .then(() => {
+                  this.$emit('value-did-change', e, newValue)
+                })
+                .catch((error) => {
+                  this.$emit('value-remote-update-error', e, newValue, error)
+                })
+            } else {
+              console.error('VueXEditable Error: Invalid Remote Update configuration.')
+            }
+          } else {
+            this.$_VueXeditable_makeLocalUpdate(newValue)
+            this.$emit('value-did-change', e, newValue)
+          }
+        }
+      },
+      $_VueXeditable_hasValueChanged (newValue) {
+        return newValue !== this.rawValue
+      },
+      $_VueXeditable_makeLocalUpdate (newValue) {
+        this.rawValue = newValue
+      },
+      $_VueXeditable_sendRemoteUpdate (newValue) {
+        let payload = {}
+
+        if (this.remote.resource && this.remote.resource.length) {
+          let subpayload = {}
+          subpayload[this.remote.key] = newValue
+          payload[this.remote.resource] = subpayload
+        } else {
+          payload[this.remote.key] = newValue
+        }
+
+        return new Promise((resolve, reject) => {
+          this.isRemoteUpdating = true
+          axios({
+            method: this.remote.method,
+            url: this.remote.url,
+            headers: this.remote.headers || {},
+            data: payload
+          })
+            .then(response => {
+              this.isRemoteUpdating = false
+              this.$_VueXeditable_makeLocalUpdate(newValue)
+              resolve(newValue)
             })
-            that.$emit('show')
-          }, 100)
-        } else {
-          this.$emit('hide')
-        }
-      },
-      keydown (e) {
-        if (e.keyCode === 13) this.editable_changed(e)
-      },
-      get_value (el) {
-        switch (this.type) {
-          case 'textarea':
-          case 'text':
-          case 'number':
-          case 'select':
-            return el.value
-          default:
-            return ''
-        }
-      },
-      editable_changed (e) {
-        let value = this.get_value(e.target)
-        if (this.url && this.url.length && value !== this.val) {
-          this.send_request(value)
-        } else {
-          this.value_did_changed(value)
-        }
-        this.$emit('change', value)
-      },
-      value_did_changed (value) {
-        this.editable_mode = false
-        this.onblur()
-        this.$emit('update:value', value)
-        this.val = value
-        this.loading = false
-      },
-      value_change_error (value) {
-        this.onblur()
-        this.loading = false
-      },
-      send_request (value) {
-        this.loading = true
-        let data = {}
-        data[this.attr] = value
-        if (this.resource) {
-          let temp = {}
-          temp[this.resource] = data
-          data = temp
-        }
-        axios({
-          method: this.method,
-          url: this.url,
-          data: data,
-          headers: this.headers || {}
-        }).then(response => {
-          this.value_did_changed(value)
-        }).catch(error => {
-          this.loading = false
+            .catch(error => {
+              this.isRemoteUpdating = false
+              reject(error)
+            })
         })
       }
     }
@@ -265,11 +251,11 @@
     outline: none;
   }
 
-  .vue-xeditable .value {
+  .vue-xeditable-value {
     white-space: pre-wrap;
   }
 
-  .vue-xeditable .empty {
+  .vue-xeditable-empty {
     color: #ea0002;
     font-style: italic;
   }
