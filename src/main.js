@@ -1,10 +1,10 @@
 import XEditable from './components/XEditable.vue'
 
-let VueXEditable = {}
+let VueXeditable = {}
 
-VueXEditable.install = function (Vue, options) {
-  Vue.component('VueXEditable', XEditable)
+VueXeditable.install = function (Vue, options) {
+  Vue.component('VueXeditable', XEditable)
 }
 
-export default VueXEditable
+export default VueXeditable
 

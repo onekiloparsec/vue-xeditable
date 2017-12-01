@@ -27,8 +27,8 @@
   <div class='content'>
     <div>
       <!--<h4>Single piece of text (default: type = text)</h4>-->
-      <!--<pre v-pre>&lt;vue-x-editable :value.sync='{{textValue}}'&gt;&lt;/vue-x-editable&gt;</pre>-->
-      <!--<vue-x-editable-->
+      <!--<pre v-pre>&lt;vue-xeditable :value.sync='{{textValue}}'&gt;&lt;/vue-xeditable&gt;</pre>-->
+      <!--<vue-xeditable-->
         <!--type="text"-->
         <!--:value.sync='textValue'-->
         <!--@start-editing="sendStartEditingEvent"-->
@@ -36,7 +36,7 @@
         <!--@value-will-change="sendValueWillChangeEvent"-->
         <!--@value-did-change="sendValueDidChangeEvent"-->
       <!--&gt;-->
-      <!--</vue-x-editable>-->
+      <!--</vue-xeditable>-->
 
       <!--<div id="events-banner" v-show="events.length > 0">-->
         <!--<div-->
@@ -50,22 +50,22 @@
       <!--</div>-->
 
       <!--<h4>Single piece of text with null value, showing empty</h4>-->
-      <!--<pre v-pre>&lt;vue-x-editable :value.sync='{{nullValue}}' empty='Custom Empty Text'&gt;&lt;/vue-x-editable&gt;</pre>-->
-      <!--<vue-x-editable type="text" :value='nullValue' empty="Custom Empty Text"></vue-x-editable>-->
+      <!--<pre v-pre>&lt;vue-xeditable :value.sync='{{nullValue}}' empty='Custom Empty Text'&gt;&lt;/vue-xeditable&gt;</pre>-->
+      <!--<vue-xeditable type="text" :value='nullValue' empty="Custom Empty Text"></vue-xeditable>-->
 
       <!--<h4>Mutiple lines text area</h4>-->
       <!--<pre-->
-        <!--v-pre>&lt;vue-x-editable type='textarea' :value.sync='{{textareaValue}}' type='textarea'></vue-x-editable></pre>-->
-      <!--<vue-x-editable :value.sync="textareaValue" type='textarea'></vue-x-editable>-->
+        <!--v-pre>&lt;vue-xeditable type='textarea' :value.sync='{{textareaValue}}' type='textarea'></vue-xeditable></pre>-->
+      <!--<vue-xeditable :value.sync="textareaValue" type='textarea'></vue-xeditable>-->
 
       <!--<h4>Editable number (integers, floats)</h4>-->
       <!--<pre v-pre>&lt;editable type='number' value={{numberValue}}&gt;&lt;/editable&gt;</pre>-->
-      <!--<vue-x-editable type='number' :value.sync='numberValue'></vue-x-editable>-->
+      <!--<vue-xeditable type='number' :value.sync='numberValue'></vue-xeditable>-->
 
       <h4>Editable options (starting with a null value)</h4>
       <pre>options = {{JSON.stringify(selectOptions)}}</pre>
-      <pre v-pre>&lt;vue-x-editable type='select' value={{selectValue}} :options='selectOptions'&gt;&lt;/vue-x-editable&gt;</pre>
-      <vue-x-editable
+      <pre v-pre>&lt;vue-xeditable type='select' value={{selectValue}} :options='selectOptions'&gt;&lt;/vue-xeditable&gt;</pre>
+      <vue-xeditable
         type='select'
         :value.sync='selectValue'
         :options='selectOptions'
@@ -74,7 +74,7 @@
         @value-will-change="sendValueWillChangeEvent"
         @value-did-change="sendValueDidChangeEvent"
       >
-      </vue-x-editable>
+      </vue-xeditable>
       <br/>
       Selected value is: {{selectValue}}
 
@@ -97,7 +97,7 @@
 <script src="dist/vue-xeditable.umd.js"></script>
 
 <script type="text/javascript">
-  Vue.use(VueXEditable)
+  Vue.use(VueXeditable)
 
   new Vue({
     el: '#app',

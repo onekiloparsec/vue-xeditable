@@ -166,7 +166,7 @@ var XEditable = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
                 this$1.$emit('value-remote-update-error', newValue, error);
               });
           } else {
-            console.error('VueXEditable Error: Invalid Remote Update configuration.');
+            console.error('VueXeditable Error: Invalid Remote Update configuration.');
           }
         } else {
           this.$_VueXeditable_makeLocalUpdate(newValue);
@@ -223,11 +223,11 @@ var XEditable = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
   }
 };
 
-var VueXEditable = {};
+var VueXeditable = {};
 
-VueXEditable.install = function (Vue, options) {
-  Vue.component('VueXEditable', XEditable);
+VueXeditable.install = function (Vue, options) {
+  Vue.component('VueXeditable', XEditable);
 };
 
-module.exports = VueXEditable;
+module.exports = VueXeditable;
 //# sourceMappingURL=vue-xeditable.csj.js.map

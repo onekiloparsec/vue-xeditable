@@ -44,7 +44,7 @@ const config1 = {
   output: [
     {file: pack.main, format: 'cjs'},
     {file: pack.module, format: 'es'},
-    {file: pack.browser, format: 'umd', name: 'VueXEditable'},
+    {file: pack.browser, format: 'umd', name: 'VueXeditable'},
   ],
   globals: {
     vue: 'Vue',
@@ -61,7 +61,7 @@ const config1 = {
 const config2 = clone(config1)
 config2.input = 'src/install.js'
 config2.output = [{
-  name: 'VueXEditable',
+  name: 'VueXeditable',
   file: `dist/${pack.name}.min.js`,
   format: 'iife'
 }]

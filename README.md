@@ -6,7 +6,7 @@ Even better editable element in Vue. Original code from https://kar-wai-wong.git
 
 # Use Setup
 
-install vue-editable
+install @onekiloparsec/vue-xeditable
 ```
 npm install @onekiloparsec/vue-xeditable --save
 ```
@@ -18,30 +18,12 @@ import vue-xeditable from './vue-xeditable.vue'
 new Vue({
   el: '#app',
   components: {
-    'xeditable': vue-xeditable
+    'vue-xeditable': vue-xeditable
   }
 })
 
-
-<xeditable value.sync='Do not go gentle into that good night'></xeditable>
-
-```
-
-## vue-xeditable with Request
-```
-<xeditable value='resource_title' url='resource_url' attr='title' resource='resource_name' method='PUT'></editable>
-```
-if you finish a edit,you will send a request like:
-```
-Request URL:[resource_url]
-Request Method:PUT
-
---------
-Request Payload
-resource:
-    title: 'your edit'
-
-```
-
 # Support Types
 **text**, **textarea**, **number**, **select**
+
+In particular, a lot of work has been done to make the select widget work perfectly. It handles
+null values, has a correctly selected value, and can respond to escape key to end editing.

@@ -2,7 +2,7 @@
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('vue'), require('axios')) :
 	typeof define === 'function' && define.amd ? define(['vue', 'axios'], factory) :
-	(global.VueXEditable = factory(global.Vue,global.axios));
+	(global.VueXeditable = factory(global.Vue,global.axios));
 }(this, (function (vue,axios) { 'use strict';
 
 vue = vue && vue.hasOwnProperty('default') ? vue['default'] : vue;
@@ -168,7 +168,7 @@ var XEditable = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
                 this$1.$emit('value-remote-update-error', newValue, error);
               });
           } else {
-            console.error('VueXEditable Error: Invalid Remote Update configuration.');
+            console.error('VueXeditable Error: Invalid Remote Update configuration.');
           }
         } else {
           this.$_VueXeditable_makeLocalUpdate(newValue);
@@ -225,13 +225,13 @@ var XEditable = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
   }
 };
 
-var VueXEditable = {};
+var VueXeditable = {};
 
-VueXEditable.install = function (Vue, options) {
-  Vue.component('VueXEditable', XEditable);
+VueXeditable.install = function (Vue, options) {
+  Vue.component('VueXeditable', XEditable);
 };
 
-return VueXEditable;
+return VueXeditable;
 
 })));
 //# sourceMappingURL=vue-xeditable.umd.js.map

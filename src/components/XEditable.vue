@@ -192,7 +192,7 @@
                   this.$emit('value-remote-update-error', newValue, error)
                 })
             } else {
-              console.error('VueXEditable Error: Invalid Remote Update configuration.')
+              console.error('VueXeditable Error: Invalid Remote Update configuration.')
             }
           } else {
             this.$_VueXeditable_makeLocalUpdate(newValue)
