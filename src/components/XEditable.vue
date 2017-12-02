@@ -145,7 +145,7 @@
           let opt = this.options.find(o => {
             return o === this.rawValue
           })
-          return opt[0]
+          return (opt) ? opt[0] : '?'
         }
         return this.rawValue
       },
