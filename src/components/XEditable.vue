@@ -228,6 +228,9 @@
         let updateValue = newValue
         if (this.type === 'select') {
           updateValue = (this.isOptionKeyFirst) ? newValue[0] : newValue[1]
+          if (updateValue === $_VueXeditable_emptyOptionValue) {
+            updateValue = null
+          }
         }
 
         let payload = {}
