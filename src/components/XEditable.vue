@@ -42,6 +42,7 @@
         type="select"
         v-model="rawValue"
         :options="$_VueXeditable_rawOptions"
+        :isKeyFirst="isOptionKeyFirst"
         @input='$_VueXeditable_valueDidChange'
         @keydown="$_VueXeditable_onKeydown"
         v-else-if='type === "select"'
@@ -68,7 +69,7 @@
     components: {XCustomSelect},
     props: {
       value: {
-        type: [String, Number]
+        type: [String, Number, Array]
       },
       type: {
         type: String,
