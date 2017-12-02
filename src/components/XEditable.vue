@@ -95,6 +95,10 @@
         type: Boolean,
         default: true
       },
+      isOptionKeyFirst: {
+        type: Boolean,
+        default: true
+      },
       remote: {
         type: Object,
         required: false,
@@ -133,7 +137,8 @@
         return this.$_VueXeditable_hasRemoteUpdate() && ['PUT', 'POST'].includes(this.remote.method.toUpperCase())
       },
       $_VueXeditable_rawOptions () {
-        return (this.allowEmptyOption) ? [[this.empty, $_VueXeditable_emptyOptionValue]].concat(this.options) : this.options
+        let emptyOption = (this.isOptionKeyFirst) ? [$_VueXeditable_emptyOptionValue, this.empty] : [this.empty, $_VueXeditable_emptyOptionValue]
+        return (this.allowEmptyOption) ? [emptyOption].concat(this.options) : this.options
       }
     },
     methods: {
@@ -145,7 +150,7 @@
           let opt = this.options.find(o => {
             return o === this.rawValue
           })
-          return (opt) ? opt[0] : '?'
+          return (opt !== undefined) ? ((this.isOptionKeyFirst) ? opt[1] : opt[0]) : '?'
         }
         return this.rawValue
       },
@@ -209,7 +214,8 @@
       $_VueXeditable_makeLocalUpdate (newValue) {
         // For select types, the value has already changed...
         if (this.type === 'select') {
-          if (newValue[1] === $_VueXeditable_emptyOptionValue) {
+          let optionKey = (this.isOptionKeyFirst) ? newValue[0] : newValue[1]
+          if (optionKey === $_VueXeditable_emptyOptionValue) {
             this.rawValue = null
           }
           this.initialSelectValue = this.rawValue
