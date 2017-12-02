@@ -62,7 +62,7 @@ const config2 = clone(config1)
 config2.input = 'src/install.js'
 config2.output = [{
   name: 'VueXeditable',
-  file: `dist/${pack.name}.min.js`,
+  file: `dist/${pack.name.split('/').pop()}.min.js`,
   format: 'iife'
 }]
 

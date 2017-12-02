@@ -46,7 +46,7 @@ export default {
     })
 
     fs.writeFile(
-      path.resolve(distDir, `${pack.name}.scss`),
+      path.resolve(distDir, `${pack.name.split('/').pop()}.scss`),
       outputs.map((output) => `@import './scss/${output.replace(/\.[a-z0-9]+$/i, '')}';`).join("\n"),
       (err) => {
         if (err) throw err
@@ -59,7 +59,7 @@ export default {
     }, (err, result) => {
       if (err) throw err
 
-      const output = path.resolve(distDir, `${pack.name}.min.css`)
+      const output = path.resolve(distDir, `${pack.name.split('/').pop()}.min.css`)
       fs.writeFile(output, result.css, (err) => {
         if (err) throw err
       })
@@ -71,7 +71,7 @@ export default {
     }, (err, result) => {
       if (err) throw err
 
-      const output = path.resolve(distDir, `${pack.name}.css`)
+      const output = path.resolve(distDir, `${pack.name.split('/').pop()}.css`)
       fs.writeFile(output, result.css, (err) => {
         if (err) throw err
       })
