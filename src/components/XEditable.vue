@@ -134,7 +134,7 @@
         return this.remote && this.remote.url && this.remote.url.length && this.remote.key && this.remote.key.length
       },
       $_VueXeditable_hasValidRemote () {
-        return this.$_VueXeditable_hasRemoteUpdate() && ['PUT', 'POST'].includes(this.remote.method.toUpperCase())
+        return this.$_VueXeditable_hasRemoteUpdate && ['PUT', 'POST'].includes(this.remote.method.toUpperCase())
       },
       $_VueXeditable_rawOptions () {
         let emptyOption = (this.isOptionKeyFirst) ? [$_VueXeditable_emptyOptionValue, this.empty] : [this.empty, $_VueXeditable_emptyOptionValue]
