@@ -225,14 +225,18 @@
         }
       },
       $_VueXeditable_sendRemoteUpdate (newValue) {
-        let payload = {}
+        let updateValue = newValue
+        if (this.type === 'select') {
+          updateValue = (this.isOptionKeyFirst) ? newValue[0] : newValue[1]
+        }
 
+        let payload = {}
         if (this.remote.resource && this.remote.resource.length) {
           let subpayload = {}
-          subpayload[this.remote.key] = newValue
+          subpayload[this.remote.key] = updateValue
           payload[this.remote.resource] = subpayload
         } else {
-          payload[this.remote.key] = newValue
+          payload[this.remote.key] = updateValue
         }
 
         return new Promise((resolve, reject) => {
