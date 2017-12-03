@@ -6,12 +6,12 @@
   >
     <option
       v-for="option in options"
-      :key="(isKeyFirst) ? option[0] : option[1]"
-      :value="(isKeyFirst) ? option[0] : option[1]"
+      :key="option"
+      :value="option"
       :selected="isSelected(option)"
       ref="options"
     >
-      {{ (isKeyFirst) ? option[1] : option[0] }}
+      {{ option }}
     </option>
   </select>
 </template>
@@ -19,7 +19,7 @@
 <script>
   export default {
     template: '#custom-select',
-    props: ['value', 'options', 'isKeyFirst'],
+    props: ['value', 'options'],
     mounted () {
       this.$refs.$_VueXeditable_Select.addEventListener('keydown', this.onKeyDown, false)
     },
@@ -27,12 +27,8 @@
       this.$refs.$_VueXeditable_Select.removeEventListener('keydown', this.onKeyDown, false)
     },
     methods: {
-      onChange (keyValue) {
-        let opt = this.options.find(o => {
-          let optKey = (this.isKeyFirst) ? o[0] : o[1]
-          return optKey.toString() === keyValue
-        })
-        this.$emit('input', opt) // MUST be called 'input'
+      onChange (newSelection) {
+        this.$emit('input', newSelection) // MUST be called 'input'
       },
       isSelected (option) {
         return option === this.value

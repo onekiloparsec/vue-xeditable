@@ -14,39 +14,41 @@
     >
 
       <input
+        v-if='type === "text"'
+        class='vue-form-control'
         type="text"
         :value="rawValue"
         @keydown='$_VueXeditable_onKeydown'
-        v-if='type === "text"'
-        class='vue-form-control'
+        ref="$_VueXeditable_text"
         autofocus
       >
 
       <textarea
-        @keydown='$_VueXeditable_onKeydown'
         v-else-if='type === "textarea"'
         class='vue-form-control'
+        @keydown='$_VueXeditable_onKeydown'
+        ref="$_VueXeditable_textarea"
       >
         {{rawValue}}
       </textarea>
 
       <input
+        v-else-if='type === "number"'
+        class='vue-form-control'
         type="number"
         :value="rawValue"
         @keydown='$_VueXeditable_onKeydown'
-        v-else-if='type === "number"'
-        class='vue-form-control'
+        ref="$_VueXeditable_number"
       >
 
       <x-custom-select
-        type="select"
-        v-model="rawValue"
-        :options="$_VueXeditable_rawOptions"
-        :isKeyFirst="isOptionKeyFirst"
-        @input='$_VueXeditable_valueDidChange'
-        @keydown="$_VueXeditable_onKeydown"
         v-else-if='type === "select"'
         class='vue-form-control'
+        v-model="rawValue"
+        :options="options"
+        @input='$_VueXeditable_valueDidChange'
+        @keydown="$_VueXeditable_onKeydown"
+        ref="$_VueXeditable_select"
       >
       </x-custom-select>
 
@@ -62,8 +64,6 @@
   import axios from 'axios'
   import XCustomSelect from './XCustomSelect.vue'
 
-  const $_VueXeditable_emptyOptionValue = -999999999
-
   export default {
     name: 'vue-xeditable',
     components: {XCustomSelect},
@@ -75,6 +75,11 @@
         type: String,
         required: false,
         default: 'text'
+      },
+      name: {
+        type: String,
+        required: false,
+        default: 'VueXeditable'
       },
       empty: {
         type: String,
@@ -91,14 +96,6 @@
         default: function () {
           return []
         }
-      },
-      allowEmptyOption: {
-        type: Boolean,
-        default: true
-      },
-      isOptionKeyFirst: {
-        type: Boolean,
-        default: true
       },
       remote: {
         type: Object,
@@ -136,10 +133,6 @@
       },
       $_VueXeditable_hasValidRemote () {
         return this.$_VueXeditable_hasRemoteUpdate && ['PUT', 'POST'].includes(this.remote.method.toUpperCase())
-      },
-      $_VueXeditable_rawOptions () {
-        let emptyOption = (this.isOptionKeyFirst) ? [$_VueXeditable_emptyOptionValue, this.empty] : [this.empty, $_VueXeditable_emptyOptionValue]
-        return (this.allowEmptyOption) ? [emptyOption].concat(this.options) : this.options
       }
     },
     methods: {
@@ -147,65 +140,57 @@
         if (this.$_VueXeditable_isValueEmpty) {
           return this.empty
         }
-        if (this.type === 'select') {
-          let opt = this.options.find(o => {
-            return o === this.rawValue
-          })
-          return (opt !== undefined) ? ((this.isOptionKeyFirst) ? opt[1] : opt[0]) : '?'
-        }
-        return this.rawValue
+        return this.rawValue || '?'
       },
-      $_VueXeditable_onKeydown (e) {
+      $_VueXeditable_onKeydown (event) {
         if (!this.isEditing) {
           return
         }
-        if (e.keyCode === 13) {
-          this.$_VueXeditable_stopEditing(e)
-          this.$_VueXeditable_valueDidChange(e.target.value)
+        if (event.keyCode === 13) {
+          this.$_VueXeditable_stopEditing(event)
+          this.$_VueXeditable_valueDidChange(event.target.value)
         }
-        else if (e.keyCode === 27) {
-          this.$_VueXeditable_stopEditing(e)
+        else if (event.keyCode === 27) {
+          this.$_VueXeditable_stopEditing(event)
         }
       },
-      $_VueXeditable_startEditing (e) {
+      $_VueXeditable_startEditing (event) {
         this.isEditing = true
         let that = this
-        that.$emit('start-editing', this.rawValue)
+        that.$emit('start-editing', this.rawValue, this.name)
         setTimeout(function () {
-          let inputs = Array.from(e.target.nextElementSibling.children)
+          let inputs = Array.from(event.target.nextElementSibling.children)
           inputs.forEach(i => {
             i.focus()
           })
         }, 100)
       },
-      $_VueXeditable_stopEditing (e) {
+      $_VueXeditable_stopEditing (event) {
         this.isEditing = false
-        let v = (this.type === 'select') ? this.initialSelectValue : this.rawValue
-        this.$emit('stop-editing', v)
+        this.$emit('stop-editing', this.rawValue, this.name)
       },
       $_VueXeditable_valueDidChange (newValue) {
         if (this.type === 'select') {
           this.$_VueXeditable_stopEditing() // Needed because no events can be associated with select / option?...
         }
         if (this.$_VueXeditable_hasValueChanged(newValue) || this.type === 'select') {
-          let v = (this.type === 'select') ? this.initialSelectValue : this.rawValue
-          this.$emit('value-will-change', v)
+          this.$emit('value-will-change', this.rawValue, this.name)
 
           if (this.$_VueXeditable_hasRemoteUpdate) {
             if (this.$_VueXeditable_hasValidRemote) {
               this.$_VueXeditable_sendRemoteUpdate(newValue)
                 .then(() => {
-                  this.$emit('value-did-change', newValue)
+                  this.$emit('value-did-change', newValue, this.name)
                 })
                 .catch((error) => {
-                  this.$emit('value-remote-update-error', newValue, error)
+                  this.$emit('value-remote-update-error', newValue, error, this.name)
                 })
             } else {
               console.error('VueXeditable Error: Invalid Remote Update configuration.')
             }
           } else {
             this.$_VueXeditable_makeLocalUpdate(newValue)
-            this.$emit('value-did-change', newValue)
+            this.$emit('value-did-change', newValue, this.name)
           }
         }
       },
@@ -215,10 +200,6 @@
       $_VueXeditable_makeLocalUpdate (newValue) {
         // For select types, the value has already changed...
         if (this.type === 'select') {
-          let optionKey = (this.isOptionKeyFirst) ? newValue[0] : newValue[1]
-          if (optionKey === $_VueXeditable_emptyOptionValue) {
-            this.rawValue = null
-          }
           this.initialSelectValue = this.rawValue
         } else {
           this.rawValue = newValue
@@ -226,12 +207,6 @@
       },
       $_VueXeditable_sendRemoteUpdate (newValue) {
         let updateValue = newValue
-        if (this.type === 'select') {
-          updateValue = (this.isOptionKeyFirst) ? newValue[0] : newValue[1]
-          if (updateValue === $_VueXeditable_emptyOptionValue) {
-            updateValue = null
-          }
-        }
 
         let payload = {}
         if (this.remote.resource && this.remote.resource.length) {
