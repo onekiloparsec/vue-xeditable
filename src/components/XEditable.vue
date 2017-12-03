@@ -1,5 +1,7 @@
 <template>
   <div class='vue-xeditable'>
+    <slot name="before" v-show="isRemoteUpdating"></slot>
+
     <span
       class="vue-xeditable-value"
       :class="{'vue-xeditable-empty': $_VueXeditable_isValueEmpty}"
@@ -54,8 +56,7 @@
 
     </div>
 
-    <div class='editable-loader' v-show='isRemoteUpdating'></div>
-
+    <slot name="after" v-show="isRemoteUpdating"></slot>
   </div>
 </template>
 
@@ -276,49 +277,7 @@
     color: #ea0002;
     font-style: italic;
   }
-
-  .editable-loader,
-  .editable-loader:before,
-  .editable-loader:after {
-    background: #999;
-    -webkit-animation: load1 1s infinite ease-in-out;
-    animation: load1 1s infinite ease-in-out;
-    width: 2px;
-    height: 2px;
-  }
-
-  .editable-loader {
-    position: absolute;
-    color: #999;
-    text-indent: -9999em;
-    margin: 3px;
-    font-size: 1px;
-    -webkit-transform: translateZ(0);
-    -ms-transform: translateZ(0);
-    transform: translateZ(0);
-    -webkit-animation-delay: -0.16s;
-    animation-delay: -0.16s;
-    top: 0;
-    left: 0;
-  }
-
-  .editable-loader:before,
-  .editable-loader:after {
-    position: absolute;
-    top: 0;
-    content: '';
-  }
-
-  .editable-loader:before {
-    left: -5px;
-    -webkit-animation-delay: -0.32s;
-    animation-delay: -0.32s;
-  }
-
-  .editable-loader:after {
-    left: 5px;
-  }
-
+  
   .vue-xeditable-control {
     width: 100%;
     display: inline-block;
@@ -347,31 +306,5 @@
     background: #07c;
     float: right;
     margin-top: 10px;
-  }
-
-  @-webkit-keyframes load1 {
-    0%,
-    80%,
-    100% {
-      box-shadow: 0 0;
-      height: 20px;
-    }
-    40% {
-      box-shadow: 0 -2em;
-      height: 5px;
-    }
-  }
-
-  @keyframes load1 {
-    0%,
-    80%,
-    100% {
-      box-shadow: 0 0;
-      height: 10px;
-    }
-    40% {
-      box-shadow: 0 -2em;
-      height: 5px;
-    }
   }
 </style>
