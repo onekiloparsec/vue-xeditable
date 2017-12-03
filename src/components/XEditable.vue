@@ -116,8 +116,7 @@
       return {
         isEditing: false,
         isRemoteUpdating: false,
-        rawValue: this.value,
-        initialSelectValue: this.value
+        rawValue: this.value
       }
     },
     watch: {
@@ -199,12 +198,7 @@
         return newValue !== this.rawValue
       },
       $_VueXeditable_makeLocalUpdate (newValue) {
-        // For select types, the value has already changed...
-        if (this.type === 'select') {
-          this.initialSelectValue = this.rawValue
-        } else {
-          this.rawValue = newValue
-        }
+        this.rawValue = newValue
       },
       $_VueXeditable_sendRemoteUpdate (newValue) {
         let updateValue = newValue
