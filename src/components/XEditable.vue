@@ -1,6 +1,6 @@
 <template>
   <div class='vue-xeditable'>
-    <slot name="before" v-show="isRemoteUpdating"></slot>
+    <slot name="before" v-if="isRemoteUpdating"></slot>
 
     <span
       class="vue-xeditable-value"
@@ -56,7 +56,7 @@
 
     </div>
 
-    <slot name="after" v-show="isRemoteUpdating"></slot>
+    <slot name="after" v-if="isRemoteUpdating"></slot>
   </div>
 </template>
 
@@ -277,7 +277,7 @@
     color: #ea0002;
     font-style: italic;
   }
-  
+
   .vue-xeditable-control {
     width: 100%;
     display: inline-block;
