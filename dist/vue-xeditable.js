@@ -1062,10 +1062,8 @@ var XEditable = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
       }
     },
     controlClass: {
-      type: Object,
-      default: function () {
-        return {}
-      }
+      type: String,
+      default: ''
     }
   },
   data: function data () {
