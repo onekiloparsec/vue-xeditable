@@ -17,7 +17,8 @@
 
       <input
         v-if='type === "text"'
-        class='vue-xeditable-form-control vue-xeditable-input-text-control'
+        class='vue-xeditable-form-control'
+        :class="controlClass"
         type="text"
         :value="rawValue"
         @keydown='$_VueXeditable_onKeydown'
@@ -27,7 +28,8 @@
 
       <textarea
         v-else-if='type === "textarea"'
-        class='vue-xeditable-form-control vue-xeditable-textarea-control'
+        class='vue-xeditable-form-control'
+        :class="controlClass"
         @keydown='$_VueXeditable_onKeydown'
         ref="$_VueXeditable_textarea"
       >
@@ -36,7 +38,8 @@
 
       <input
         v-else-if='type === "number"'
-        class='vue-xeditable-form-control vue-xeditable-input-number-control'
+        class='vue-xeditable-form-control'
+        :class="controlClass"
         type="number"
         :value="rawValue"
         @keydown='$_VueXeditable_onKeydown'
@@ -45,7 +48,8 @@
 
       <x-custom-select
         v-else-if='type === "select"'
-        class='vue-xeditable-form-control vue-xeditable-select-control'
+        class='vue-xeditable-form-control'
+        :class="controlClass"
         v-model="rawValue"
         :options="options"
         @input='$_VueXeditable_valueDidChange'
@@ -108,6 +112,12 @@
             resource: null,
             headers: null
           }
+        }
+      },
+      controlClass: {
+        type: Object,
+        default: function () {
+          return {}
         }
       }
     },
@@ -236,7 +246,6 @@
 
 <style>
   .vue-xeditable {
-    width: auto;
     color: #222;
     cursor: pointer;
     position: relative;
@@ -262,8 +271,6 @@
   }
 
   .vue-xeditable-form-control {
-    display: block;
-    width: calc(100% - 15px);
     padding: 5px;
     font-size: 14px;
     line-height: 1.42857143;
@@ -276,28 +283,28 @@
     outline: none;
   }
 
-  .vue-xeditable-button {
-    display: inline-block;
-    padding: 3px 5px;
-    margin-bottom: 0;
-    font-size: 14px;
-    font-weight: normal;
-    line-height: 1.42857143;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-    cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    background-image: none;
-    border: 1px solid transparent;
-    border-radius: 4px;
-    font-size: 12px;
-    color: #fff;
-    background: #07c;
-    float: right;
-    margin-top: 10px;
-  }
+  /*.vue-xeditable-button {*/
+  /*display: inline-block;*/
+  /*padding: 3px 5px;*/
+  /*margin-bottom: 0;*/
+  /*font-size: 14px;*/
+  /*font-weight: normal;*/
+  /*line-height: 1.42857143;*/
+  /*text-align: center;*/
+  /*white-space: nowrap;*/
+  /*vertical-align: middle;*/
+  /*cursor: pointer;*/
+  /*-webkit-user-select: none;*/
+  /*-moz-user-select: none;*/
+  /*-ms-user-select: none;*/
+  /*user-select: none;*/
+  /*background-image: none;*/
+  /*border: 1px solid transparent;*/
+  /*border-radius: 4px;*/
+  /*font-size: 12px;*/
+  /*color: #fff;*/
+  /*background: #07c;*/
+  /*float: right;*/
+  /*margin-top: 10px;*/
+  /*}*/
 </style>
