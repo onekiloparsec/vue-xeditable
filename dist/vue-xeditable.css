@@ -1,29 +1,29 @@
-.vue-xeditable {
+.vue-xeditable[data-v-cd131608] {
   color: #222;
   cursor: pointer;
   position: relative;
   display: inline-block;
 }
 
-.vue-xeditable:hover {
+.vue-xeditable[data-v-cd131608]:hover {
   color: #666;
 }
 
-.vue-xeditable-value {
+.vue-xeditable-value[data-v-cd131608] {
   white-space: pre-wrap;
 }
 
-.vue-xeditable-empty {
+.vue-xeditable-empty[data-v-cd131608] {
   color: #ea0002;
   font-style: italic;
 }
 
-.vue-xeditable-control {
-  width: 100%;
-  display: inline-block;
+.vue-xeditable-control[data-v-cd131608] {
+  /*width: 100%;*/
+  /*display: inline-block;*/
 }
 
-.vue-xeditable-form-control {
+.vue-xeditable-form-control[data-v-cd131608] {
   padding: 5px;
   font-size: 14px;
   line-height: 1.42857143;

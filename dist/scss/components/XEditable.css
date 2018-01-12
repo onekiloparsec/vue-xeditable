@@ -264,8 +264,8 @@
 }
 
 .vue-xeditable-control {
-  width: 100%;
-  display: inline-block;
+  /*width: 100%;*/
+  /*display: inline-block;*/
 }
 
 .vue-xeditable-form-control {
