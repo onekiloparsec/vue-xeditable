@@ -115,10 +115,8 @@
         }
       },
       controlClass: {
-        type: Object,
-        default: function () {
-          return {}
-        }
+        type: String,
+        default: ''
       }
     },
     data () {
