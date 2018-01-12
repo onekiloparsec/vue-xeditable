@@ -17,7 +17,7 @@
 
       <input
         v-if='type === "text"'
-        class='vue-form-control'
+        class='vue-xeditable-form-control vue-xeditable-input-text-control'
         type="text"
         :value="rawValue"
         @keydown='$_VueXeditable_onKeydown'
@@ -27,7 +27,7 @@
 
       <textarea
         v-else-if='type === "textarea"'
-        class='vue-form-control'
+        class='vue-xeditable-form-control vue-xeditable-textarea-control'
         @keydown='$_VueXeditable_onKeydown'
         ref="$_VueXeditable_textarea"
       >
@@ -36,7 +36,7 @@
 
       <input
         v-else-if='type === "number"'
-        class='vue-form-control'
+        class='vue-xeditable-form-control vue-xeditable-input-number-control'
         type="number"
         :value="rawValue"
         @keydown='$_VueXeditable_onKeydown'
@@ -45,7 +45,7 @@
 
       <x-custom-select
         v-else-if='type === "select"'
-        class='vue-form-control'
+        class='vue-xeditable-form-control vue-xeditable-select-control'
         v-model="rawValue"
         :options="options"
         @input='$_VueXeditable_valueDidChange'
@@ -235,7 +235,7 @@
   }
 </script>
 
-<style scoped>
+<style>
   .vue-xeditable {
     width: auto;
     color: #222;
@@ -246,21 +246,6 @@
 
   .vue-xeditable:hover {
     color: #666;
-  }
-
-  .vue-form-control {
-    display: block;
-    width: 100%;
-    padding: 5px;
-    font-size: 14px;
-    line-height: 1.42857143;
-    color: #555;
-    background-color: #fff;
-    background-image: none;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-    outline: none;
   }
 
   .vue-xeditable-value {
@@ -277,7 +262,22 @@
     display: inline-block;
   }
 
-  .vue-editable-button {
+  .vue-xeditable-form-control {
+    display: block;
+    width: calc(100% - 15px);
+    padding: 5px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    outline: none;
+  }
+
+  .vue-xeditable-button {
     display: inline-block;
     padding: 3px 5px;
     margin-bottom: 0;
