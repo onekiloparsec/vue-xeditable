@@ -1,4 +1,4 @@
-.vue-xeditable[data-v-cd131608] {
+.vue-xeditable {
   width: auto;
   color: #222;
   cursor: pointer;
@@ -6,13 +6,27 @@
   display: inline-block;
 }
 
-.vue-xeditable[data-v-cd131608]:hover {
+.vue-xeditable:hover {
   color: #666;
 }
 
-.vue-form-control[data-v-cd131608] {
-  display: block;
+.vue-xeditable-value {
+  white-space: pre-wrap;
+}
+
+.vue-xeditable-empty {
+  color: #ea0002;
+  font-style: italic;
+}
+
+.vue-xeditable-control {
   width: 100%;
+  display: inline-block;
+}
+
+.vue-xeditable-form-control {
+  display: block;
+  width: calc(100% - 15px);
   padding: 5px;
   font-size: 14px;
   line-height: 1.42857143;
@@ -25,21 +39,7 @@
   outline: none;
 }
 
-.vue-xeditable-value[data-v-cd131608] {
-  white-space: pre-wrap;
-}
-
-.vue-xeditable-empty[data-v-cd131608] {
-  color: #ea0002;
-  font-style: italic;
-}
-
-.vue-xeditable-control[data-v-cd131608] {
-  width: 100%;
-  display: inline-block;
-}
-
-.vue-editable-button[data-v-cd131608] {
+.vue-xeditable-button {
   display: inline-block;
   padding: 3px 5px;
   margin-bottom: 0;
