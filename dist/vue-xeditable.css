@@ -26,6 +26,7 @@
 .vue-xeditable-form-control[data-v-cd131608] {
   padding: 5px;
   font-size: 14px;
+  box-sizing: border-box;
   line-height: 1.42857143;
   color: #555;
   background-color: #fff;
