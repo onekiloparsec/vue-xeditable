@@ -18,7 +18,6 @@
       <input
         v-if='type === "text"'
         class='vue-xeditable-form-control'
-        :class="controlClass"
         type="text"
         :value="rawValue"
         @keydown='$_VueXeditable_onKeydown'
@@ -29,7 +28,6 @@
       <textarea
         v-else-if='type === "textarea"'
         class='vue-xeditable-form-control'
-        :class="controlClass"
         @keydown='$_VueXeditable_onKeydown'
         ref="$_VueXeditable_textarea"
       >
@@ -39,7 +37,6 @@
       <input
         v-else-if='type === "number"'
         class='vue-xeditable-form-control'
-        :class="controlClass"
         type="number"
         :value="rawValue"
         @keydown='$_VueXeditable_onKeydown'
@@ -49,7 +46,6 @@
       <x-custom-select
         v-else-if='type === "select"'
         class='vue-xeditable-form-control'
-        :class="controlClass"
         v-model="rawValue"
         :options="options"
         @input='$_VueXeditable_valueDidChange'
@@ -113,10 +109,6 @@
             headers: null
           }
         }
-      },
-      controlClass: {
-        type: String,
-        default: ''
       }
     },
     data () {
@@ -246,8 +238,6 @@
   .vue-xeditable {
     color: #222;
     cursor: pointer;
-    position: relative;
-    display: inline-block;
   }
 
   .vue-xeditable:hover {
@@ -264,14 +254,13 @@
   }
 
   .vue-xeditable-control {
-    /*width: 100%;*/
-    /*display: inline-block;*/
   }
 
   .vue-xeditable-form-control {
+    width: 100%;
     padding: 5px;
     font-size: 14px;
-    box-sizing: border-box;
+    box-sizing: content-box;
     line-height: 1.42857143;
     color: #555;
     background-color: #fff;
