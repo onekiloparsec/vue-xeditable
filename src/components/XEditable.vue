@@ -21,7 +21,7 @@
         type="text"
         :value="rawValue"
         @keydown='$_VueXeditable_onKeydown'
-        ref="$_VueXeditable_text"
+        @blur="$_VueXeditable_stopEditing"
         autofocus
       >
 
@@ -29,7 +29,7 @@
         v-else-if='type === "textarea"'
         class='vue-xeditable-form-control'
         @keydown='$_VueXeditable_onKeydown'
-        ref="$_VueXeditable_textarea"
+        @blur="$_VueXeditable_stopEditing"
       >
         {{rawValue}}
       </textarea>
@@ -40,7 +40,7 @@
         type="number"
         :value="rawValue"
         @keydown='$_VueXeditable_onKeydown'
-        ref="$_VueXeditable_number"
+        @blur="$_VueXeditable_stopEditing"
       >
 
       <x-custom-select
@@ -50,7 +50,7 @@
         :options="options"
         @input='$_VueXeditable_valueDidChange'
         @keydown="$_VueXeditable_onKeydown"
-        ref="$_VueXeditable_select"
+        @blur="$_VueXeditable_stopEditing"
       >
       </x-custom-select>
 
