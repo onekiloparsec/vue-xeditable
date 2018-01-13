@@ -257,7 +257,6 @@
   }
 
   .vue-xeditable-form-control {
-    width: 100%;
     padding: 5px;
     font-size: 14px;
     box-sizing: content-box;
