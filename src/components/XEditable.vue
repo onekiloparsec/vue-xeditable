@@ -6,7 +6,8 @@
       class="vue-xeditable-value"
       :class="{'vue-xeditable-empty': $_VueXeditable_isValueEmpty}"
       v-show='!isEditing && !isRemoteUpdating'
-      @click='$_VueXeditable_startEditing'
+      v-on:click='$_VueXeditable_maybeStartEditing(1, $event)'
+      v-on:dblclick='$_VueXeditable_maybeStartEditing(2, $event)'
       v-html='$_VueXeditable_getHTMLValue()'>
     </span>
 
@@ -66,7 +67,7 @@
 
   export default {
     name: 'vue-xeditable',
-    components: {XCustomSelect},
+    components: { XCustomSelect },
     props: {
       value: {
         type: [String, Number, Array]
@@ -96,6 +97,11 @@
         default: function () {
           return []
         }
+      },
+      editOnDoubleClick: {
+        type: Boolean,
+        required: false,
+        default: false
       },
       remote: {
         type: Object,
@@ -151,6 +157,12 @@
         }
         else if (event.keyCode === 27) {
           this.$_VueXeditable_stopEditing(event)
+        }
+      },
+      $_VueXeditable_maybeStartEditing (value, event) {
+        console.log(value, event)
+        if ((value === 1 && !this.editOnDoubleClick) || (value === 2 && this.editOnDoubleClick)) {
+          this.$_VueXeditable_startEditing(event)
         }
       },
       $_VueXeditable_startEditing (event) {
@@ -235,63 +247,58 @@
 </script>
 
 <style scoped>
-  /*.vue-xeditable {*/
-    /*color: #222;*/
-    /*cursor: pointer;*/
-  /*}*/
+  .vue-xeditable {
+    color: #222;
+    cursor: pointer;
+  }
 
-  /*.vue-xeditable:hover {*/
-    /*color: #666;*/
-  /*}*/
+  .vue-xeditable:hover {
+    color: #666;
+  }
 
-  /*.vue-xeditable-value {*/
-    /*white-space: pre-wrap;*/
-  /*}*/
+  .vue-xeditable-value {
+    white-space: pre-wrap;
+    user-select: none;
+  }
 
-  /*.vue-xeditable-empty {*/
-    /*color: #ea0002;*/
-    /*font-style: italic;*/
-  /*}*/
+  .vue-xeditable-empty {
+    color: #ea0002;
+    font-style: italic;
+  }
 
-  /*.vue-xeditable-control {*/
-  /*}*/
+  .vue-xeditable-control {
+  }
 
-  /*.vue-xeditable-form-control {*/
-    /*padding: 5px;*/
-    /*font-size: 14px;*/
-    /*box-sizing: content-box;*/
-    /*line-height: 1.42857143;*/
-    /*color: #555;*/
-    /*background-color: #fff;*/
-    /*background-image: none;*/
-    /*border: 1px solid #ccc;*/
-    /*border-radius: 4px;*/
-    /*box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);*/
-    /*outline: none;*/
-  /*}*/
+  .vue-xeditable-form-control {
+    padding: 5px;
+    box-sizing: content-box;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    outline: none;
+  }
 
   /*.vue-xeditable-button {*/
-  /*display: inline-block;*/
-  /*padding: 3px 5px;*/
-  /*margin-bottom: 0;*/
-  /*font-size: 14px;*/
-  /*font-weight: normal;*/
-  /*line-height: 1.42857143;*/
-  /*text-align: center;*/
-  /*white-space: nowrap;*/
-  /*vertical-align: middle;*/
-  /*cursor: pointer;*/
-  /*-webkit-user-select: none;*/
-  /*-moz-user-select: none;*/
-  /*-ms-user-select: none;*/
-  /*user-select: none;*/
-  /*background-image: none;*/
-  /*border: 1px solid transparent;*/
-  /*border-radius: 4px;*/
-  /*font-size: 12px;*/
-  /*color: #fff;*/
-  /*background: #07c;*/
-  /*float: right;*/
-  /*margin-top: 10px;*/
+    /*display: inline-block;*/
+    /*padding: 3px 5px;*/
+    /*margin-bottom: 0;*/
+    /*font-size: 14px;*/
+    /*font-weight: normal;*/
+    /*line-height: 1.42857143;*/
+    /*text-align: center;*/
+    /*white-space: nowrap;*/
+    /*vertical-align: middle;*/
+    /*cursor: pointer;*/
+    /*-webkit-user-select: none;*/
+    /*-moz-user-select: none;*/
+    /*-ms-user-select: none;*/
+    /*user-select: none;*/
+    /*background-image: none;*/
+    /*border: 1px solid transparent;*/
+    /*border-radius: 4px;*/
+    /*color: #fff;*/
+    /*background: #07c;*/
+    /*float: right;*/
+    /*margin-top: 10px;*/
   /*}*/
 </style>
