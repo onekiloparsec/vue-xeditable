@@ -235,40 +235,40 @@
 </script>
 
 <style scoped>
-  .vue-xeditable {
-    color: #222;
-    cursor: pointer;
-  }
+  /*.vue-xeditable {*/
+    /*color: #222;*/
+    /*cursor: pointer;*/
+  /*}*/
 
-  .vue-xeditable:hover {
-    color: #666;
-  }
+  /*.vue-xeditable:hover {*/
+    /*color: #666;*/
+  /*}*/
 
-  .vue-xeditable-value {
-    white-space: pre-wrap;
-  }
+  /*.vue-xeditable-value {*/
+    /*white-space: pre-wrap;*/
+  /*}*/
 
-  .vue-xeditable-empty {
-    color: #ea0002;
-    font-style: italic;
-  }
+  /*.vue-xeditable-empty {*/
+    /*color: #ea0002;*/
+    /*font-style: italic;*/
+  /*}*/
 
-  .vue-xeditable-control {
-  }
+  /*.vue-xeditable-control {*/
+  /*}*/
 
-  .vue-xeditable-form-control {
-    padding: 5px;
-    font-size: 14px;
-    box-sizing: content-box;
-    line-height: 1.42857143;
-    color: #555;
-    background-color: #fff;
-    background-image: none;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-    outline: none;
-  }
+  /*.vue-xeditable-form-control {*/
+    /*padding: 5px;*/
+    /*font-size: 14px;*/
+    /*box-sizing: content-box;*/
+    /*line-height: 1.42857143;*/
+    /*color: #555;*/
+    /*background-color: #fff;*/
+    /*background-image: none;*/
+    /*border: 1px solid #ccc;*/
+    /*border-radius: 4px;*/
+    /*box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);*/
+    /*outline: none;*/
+  /*}*/
 
   /*.vue-xeditable-button {*/
   /*display: inline-block;*/
