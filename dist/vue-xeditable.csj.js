@@ -121,7 +121,6 @@ var XEditable = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
       }
     },
     $_VueXeditable_maybeStartEditing: function $_VueXeditable_maybeStartEditing (value, event) {
-      console.log(value, event);
       if ((value === 1 && !this.editOnDoubleClick) || (value === 2 && this.editOnDoubleClick)) {
         this.$_VueXeditable_startEditing(event);
       }
