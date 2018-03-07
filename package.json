@@ -18,7 +18,7 @@
     "url": "https://github.com/onekiloparsec/vue-xeditable.git"
   },
   "publishConfig": {
-    "registry": "https://www.npmjs.com"
+    "registry": "https://registry.npmjs.org/"
   },
   "bugs": {
     "url": "https://github.com/onekiloparsec/vue-xeditable/issues"
