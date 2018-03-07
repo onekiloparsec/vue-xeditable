@@ -50,6 +50,31 @@
         </div>
       </div>
 
+      <h4>Single piece of text with doubleClick</h4>
+      <pre v-pre>&lt;vue-xeditable :value.sync='{{doubeTextValue}}'&gt;&lt;/vue-xeditable&gt;</pre>
+      <vue-xeditable
+        type="text"
+        name="doubletTextEvents"
+        :value.sync='doubeTextValue'
+        :edit-on-double-click="true"
+        @start-editing="sendStartEditingEvent"
+        @stop-editing="sendStopEditingEvent"
+        @value-will-change="sendValueWillChangeEvent"
+        @value-did-change="sendValueDidChangeEvent"
+      >
+      </vue-xeditable>
+
+      <div class="events-banner" v-show="doubletTextEvents.length > 0">
+        <div
+          class="events-banner-event"
+          v-for="(event, index) in doubletTextEvents"
+        >
+          <span class="prefix">Event {{event.index}}:</span>
+          <span class="content">{{event.message}}</span>
+          <span class="value">'{{event.value}}'</span>
+        </div>
+      </div>
+
       <!--<h4>Single piece of text with null value, showing empty</h4>-->
       <!--<pre v-pre>&lt;vue-xeditable :value.sync='{{nullValue}}' empty='Custom Empty Text'&gt;&lt;/vue-xeditable&gt;</pre>-->
       <!--<vue-xeditable type="text" :value='nullValue' empty="Custom Empty Text"></vue-xeditable>-->
@@ -108,12 +133,14 @@
       display: false,
       nullValue: null,
       textValue: 'This is an editable text.',
+      doubeTextValue: 'This is also an editable text with double click',
       textareaValue: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
       numberValue: 1,
       selectValue: 'Silver',
       selectOptions: ['Gold', 'Silver', 'Bronze'],
       eventsCount: 0,
       textEvents: [],
+      doubletTextEvents: [],
       selectEvents: [],
     },
     methods: {
