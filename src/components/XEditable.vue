@@ -160,7 +160,6 @@
         }
       },
       $_VueXeditable_maybeStartEditing (value, event) {
-        console.log(value, event)
         if ((value === 1 && !this.editOnDoubleClick) || (value === 2 && this.editOnDoubleClick)) {
           this.$_VueXeditable_startEditing(event)
         }
