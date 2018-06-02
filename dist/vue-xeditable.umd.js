@@ -105,6 +105,14 @@
     watch: {
       value: function value (newValue) {
         this.rawValue = newValue;
+      },
+      options: function options (newOptions) {
+        var this$1 = this;
+
+        this.rawValue = newOptions.find(function (o) {
+          var v = (Array.isArray(o)) ? o[0] : o;
+          return v === this$1.rawValue
+        });
       }
     },
     computed: {
