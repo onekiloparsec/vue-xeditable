@@ -47,7 +47,7 @@
       <x-custom-select
         v-else-if='type === "select"'
         class='vue-xeditable-form-control'
-        v-model="rawValue"
+        :value="rawValue"
         :options="options"
         @input='$_VueXeditable_valueDidChange'
         @keydown="$_VueXeditable_onKeydown"
@@ -145,6 +145,9 @@
         if (this.$_VueXeditable_isValueEmpty) {
           return this.empty
         }
+        if (this.type === 'select' && Array.isArray(this.rawValue)) {
+          return this.rawValue[this.rawValue.length - 1]
+        }
         return this.rawValue || '?'
       },
       $_VueXeditable_onKeydown (event) {
@@ -180,6 +183,7 @@
         this.$emit('stop-editing', this.rawValue, this.name)
       },
       $_VueXeditable_valueDidChange (newValue) {
+        console.log('valueDidChange', newValue)
         if (this.type === 'select') {
           this.$_VueXeditable_stopEditing() // Needed because no events can be associated with select / option?...
         }
@@ -211,7 +215,14 @@
         this.rawValue = newValue
       },
       $_VueXeditable_sendRemoteUpdate (newValue) {
-        let updateValue = newValue
+        let updateValue = null
+        if (this.type === 'number') {
+          updateValue = parseFloat(newValue)
+        } else if (this.type === 'select') {
+          updateValue = (Array.isArray(newValue)) ? newValue[0] : newValue
+        } else {
+          updateValue = newValue.toString()
+        }
 
         let payload = {}
         if (this.remote.resource && this.remote.resource.length) {
@@ -221,6 +232,8 @@
         } else {
           payload[this.remote.key] = updateValue
         }
+
+        console.log(payload)
 
         return new Promise((resolve, reject) => {
           this.isRemoteUpdating = true
