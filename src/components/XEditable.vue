@@ -127,6 +127,12 @@
     watch: {
       value (newValue) {
         this.rawValue = newValue
+      },
+      options (newOptions) {
+        this.rawValue = newOptions.find((o) => {
+          const v = (Array.isArray(o)) ? o[0] : o
+          return v === this.rawValue
+        })
       }
     },
     computed: {
