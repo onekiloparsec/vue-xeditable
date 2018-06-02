@@ -80,7 +80,7 @@
       name: {
         type: String,
         required: false,
-        default: 'VueXeditable'
+        default: 'VueXeditableDefaultName'
       },
       empty: {
         type: String,
