@@ -4,7 +4,6 @@ var XCustomSelect = {render: function(){var _vm=this;var _h=_vm.$createElement;v
   template: '#custom-select',
   props: ['value', 'options'],
   mounted: function mounted () {
-    console.log('mounted', this.value, this.options);
     this.$refs.$_VueXeditable_Select.addEventListener('keydown', this.onKeyDown, false);
   },
   beforeDestroy: function beforeDestroy () {
@@ -158,7 +157,6 @@ var XEditable = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
     $_VueXeditable_valueDidChange: function $_VueXeditable_valueDidChange (newValue) {
       var this$1 = this;
 
-      console.log('valueDidChange', newValue);
       if (this.type === 'select') {
         this.$_VueXeditable_stopEditing(); // Needed because no events can be associated with select / option?...
       }

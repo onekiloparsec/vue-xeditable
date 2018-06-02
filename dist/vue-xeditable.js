@@ -1251,7 +1251,6 @@
     template: '#custom-select',
     props: ['value', 'options'],
     mounted: function mounted () {
-      console.log('mounted', this.value, this.options);
       this.$refs.$_VueXeditable_Select.addEventListener('keydown', this.onKeyDown, false);
     },
     beforeDestroy: function beforeDestroy () {
@@ -1405,7 +1404,6 @@
       $_VueXeditable_valueDidChange: function $_VueXeditable_valueDidChange (newValue) {
         var this$1 = this;
 
-        console.log('valueDidChange', newValue);
         if (this.type === 'select') {
           this.$_VueXeditable_stopEditing(); // Needed because no events can be associated with select / option?...
         }
