@@ -4,18 +4,34 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var axios = _interopDefault(require('axios'));
 
-var XCustomSelect = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('select',{ref:"$_VueXeditable_Select",domProps:{"value":_vm.value},on:{"change":function($event){_vm.onChange($event.target.value);}}},_vm._l((_vm.options),function(option){return _c('option',{key:option,ref:"options",refInFor:true,domProps:{"value":option,"selected":_vm.isSelected(option)}},[_vm._v(" "+_vm._s(option)+" ")])}))},staticRenderFns: [],
+var XCustomSelect = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('select',{ref:"$_VueXeditable_Select",domProps:{"value":_vm.internalOptionValue(_vm.value)},on:{"change":function($event){_vm.onChange($event.target.value);}}},_vm._l((_vm.options),function(option,index){return _c('option',{key:index,ref:"options",refInFor:true,domProps:{"value":index,"selected":_vm.isSelected(option)}},[_vm._v(" "+_vm._s(_vm.displayedOptionValue(option))+" ")])}))},staticRenderFns: [],
   template: '#custom-select',
   props: ['value', 'options'],
   mounted: function mounted () {
+    console.log('mounted', this.value, this.options);
     this.$refs.$_VueXeditable_Select.addEventListener('keydown', this.onKeyDown, false);
   },
   beforeDestroy: function beforeDestroy () {
     this.$refs.$_VueXeditable_Select.removeEventListener('keydown', this.onKeyDown, false);
   },
   methods: {
-    onChange: function onChange (newSelection) {
-      this.$emit('input', newSelection); // MUST be called 'input'
+    displayedOptionValue: function displayedOptionValue (option) {
+      if (Array.isArray(option)) {
+        return option[option.length - 1]
+      } else {
+        return option
+      }
+    },
+    internalOptionValue: function internalOptionValue (option) {
+      if (Array.isArray(option)) {
+        return option[0]
+      } else {
+        return option
+      }
+    },
+    onChange: function onChange (newSelectionIndex) {
+      // MUST be called 'input'
+      this.$emit('input', this.options[newSelectionIndex]);
     },
     isSelected: function isSelected (option) {
       return option === this.value
@@ -26,7 +42,7 @@ var XCustomSelect = {render: function(){var _vm=this;var _h=_vm.$createElement;v
   }
 }
 
-var XEditable = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"vue-xeditable"},[(_vm.isRemoteUpdating)?_vm._t("before"):_vm._e(),_vm._v(" "),_c('span',{directives:[{name:"show",rawName:"v-show",value:(!_vm.isEditing && !_vm.isRemoteUpdating),expression:"!isEditing && !isRemoteUpdating"}],staticClass:"vue-xeditable-value",class:{'vue-xeditable-empty': _vm.$_VueXeditable_isValueEmpty},domProps:{"innerHTML":_vm._s(_vm.$_VueXeditable_getHTMLValue())},on:{"click":function($event){_vm.$_VueXeditable_maybeStartEditing(1, $event);},"dblclick":function($event){_vm.$_VueXeditable_maybeStartEditing(2, $event);}}}),_vm._v(" "),_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.isEditing && !_vm.isRemoteUpdating),expression:"isEditing && !isRemoteUpdating"}],staticClass:"vue-xeditable-control"},[(_vm.type === "text")?_c('input',{staticClass:"vue-xeditable-form-control",attrs:{"type":"text","autofocus":""},domProps:{"value":_vm.rawValue},on:{"keydown":_vm.$_VueXeditable_onKeydown,"blur":_vm.$_VueXeditable_stopEditing}}):(_vm.type === "textarea")?_c('textarea',{staticClass:"vue-xeditable-form-control",on:{"keydown":_vm.$_VueXeditable_onKeydown,"blur":_vm.$_VueXeditable_stopEditing}},[_vm._v("      "+_vm._s(_vm.rawValue)+"\n    ")]):(_vm.type === "number")?_c('input',{staticClass:"vue-xeditable-form-control",attrs:{"type":"number"},domProps:{"value":_vm.rawValue},on:{"keydown":_vm.$_VueXeditable_onKeydown,"blur":_vm.$_VueXeditable_stopEditing}}):(_vm.type === "select")?_c('x-custom-select',{staticClass:"vue-xeditable-form-control",attrs:{"options":_vm.options},on:{"input":_vm.$_VueXeditable_valueDidChange,"keydown":_vm.$_VueXeditable_onKeydown,"blur":_vm.$_VueXeditable_stopEditing},model:{value:(_vm.rawValue),callback:function ($$v) {_vm.rawValue=$$v;},expression:"rawValue"}}):_vm._e()],1),_vm._v(" "),(_vm.isRemoteUpdating)?_vm._t("after"):_vm._e()],2)},staticRenderFns: [],
+var XEditable = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"vue-xeditable"},[(_vm.isRemoteUpdating)?_vm._t("before"):_vm._e(),_vm._v(" "),_c('span',{directives:[{name:"show",rawName:"v-show",value:(!_vm.isEditing && !_vm.isRemoteUpdating),expression:"!isEditing && !isRemoteUpdating"}],staticClass:"vue-xeditable-value",class:{'vue-xeditable-empty': _vm.$_VueXeditable_isValueEmpty},domProps:{"innerHTML":_vm._s(_vm.$_VueXeditable_getHTMLValue())},on:{"click":function($event){_vm.$_VueXeditable_maybeStartEditing(1, $event);},"dblclick":function($event){_vm.$_VueXeditable_maybeStartEditing(2, $event);}}}),_vm._v(" "),_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.isEditing && !_vm.isRemoteUpdating),expression:"isEditing && !isRemoteUpdating"}],staticClass:"vue-xeditable-control"},[(_vm.type === "text")?_c('input',{staticClass:"vue-xeditable-form-control",attrs:{"type":"text","autofocus":""},domProps:{"value":_vm.rawValue},on:{"keydown":_vm.$_VueXeditable_onKeydown,"blur":_vm.$_VueXeditable_stopEditing}}):(_vm.type === "textarea")?_c('textarea',{staticClass:"vue-xeditable-form-control",on:{"keydown":_vm.$_VueXeditable_onKeydown,"blur":_vm.$_VueXeditable_stopEditing}},[_vm._v("      "+_vm._s(_vm.rawValue)+"\n    ")]):(_vm.type === "number")?_c('input',{staticClass:"vue-xeditable-form-control",attrs:{"type":"number"},domProps:{"value":_vm.rawValue},on:{"keydown":_vm.$_VueXeditable_onKeydown,"blur":_vm.$_VueXeditable_stopEditing}}):(_vm.type === "select")?_c('x-custom-select',{staticClass:"vue-xeditable-form-control",attrs:{"value":_vm.rawValue,"options":_vm.options},on:{"input":_vm.$_VueXeditable_valueDidChange,"keydown":_vm.$_VueXeditable_onKeydown,"blur":_vm.$_VueXeditable_stopEditing}}):_vm._e()],1),_vm._v(" "),(_vm.isRemoteUpdating)?_vm._t("after"):_vm._e()],2)},staticRenderFns: [],
   name: 'vue-xeditable',
   components: { XCustomSelect: XCustomSelect },
   props: {
@@ -106,6 +122,9 @@ var XEditable = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
       if (this.$_VueXeditable_isValueEmpty) {
         return this.empty
       }
+      if (this.type === 'select' && Array.isArray(this.rawValue)) {
+        return this.rawValue[this.rawValue.length - 1]
+      }
       return this.rawValue || '?'
     },
     $_VueXeditable_onKeydown: function $_VueXeditable_onKeydown (event) {
@@ -143,6 +162,7 @@ var XEditable = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
     $_VueXeditable_valueDidChange: function $_VueXeditable_valueDidChange (newValue) {
       var this$1 = this;
 
+      console.log('valueDidChange', newValue);
       if (this.type === 'select') {
         this.$_VueXeditable_stopEditing(); // Needed because no events can be associated with select / option?...
       }
@@ -176,7 +196,14 @@ var XEditable = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
     $_VueXeditable_sendRemoteUpdate: function $_VueXeditable_sendRemoteUpdate (newValue) {
       var this$1 = this;
 
-      var updateValue = newValue;
+      var updateValue = null;
+      if (this.type === 'number') {
+        updateValue = parseFloat(newValue);
+      } else if (this.type === 'select') {
+        updateValue = (Array.isArray(newValue)) ? newValue[0] : newValue;
+      } else {
+        updateValue = newValue.toString();
+      }
 
       var payload = {};
       if (this.remote.resource && this.remote.resource.length) {
@@ -186,6 +213,8 @@ var XEditable = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
       } else {
         payload[this.remote.key] = updateValue;
       }
+
+      console.log(payload);
 
       return new Promise(function (resolve, reject) {
         this$1.isRemoteUpdating = true;
