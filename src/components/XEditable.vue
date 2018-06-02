@@ -131,7 +131,7 @@
     },
     computed: {
       $_VueXeditable_isValueEmpty () {
-        return this.rawValue === null || this.rawValue === undefined || this.rawValue === ''
+        return (this.rawValue === null || this.rawValue === undefined || this.rawValue === '')
       },
       $_VueXeditable_hasRemoteUpdate () {
         return this.remote && this.remote.url && this.remote.url.length && this.remote.key && this.remote.key.length
@@ -245,7 +245,7 @@
   }
 </script>
 
-<style scoped>
+<style>
   .vue-xeditable {
     color: #222;
     cursor: pointer;
