@@ -232,8 +232,6 @@
           payload[this.remote.key] = updateValue
         }
 
-        console.log(payload)
-
         return new Promise((resolve, reject) => {
           this.isRemoteUpdating = true
           axios({
