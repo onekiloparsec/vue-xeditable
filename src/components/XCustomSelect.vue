@@ -21,7 +21,6 @@
     template: '#custom-select',
     props: ['value', 'options'],
     mounted () {
-      console.log('mounted', this.value, this.options)
       this.$refs.$_VueXeditable_Select.addEventListener('keydown', this.onKeyDown, false)
     },
     beforeDestroy () {

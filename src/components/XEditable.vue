@@ -183,7 +183,6 @@
         this.$emit('stop-editing', this.rawValue, this.name)
       },
       $_VueXeditable_valueDidChange (newValue) {
-        console.log('valueDidChange', newValue)
         if (this.type === 'select') {
           this.$_VueXeditable_stopEditing() // Needed because no events can be associated with select / option?...
         }
