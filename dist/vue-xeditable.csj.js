@@ -212,8 +212,6 @@ var XEditable = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
         payload[this.remote.key] = updateValue;
       }
 
-      console.log(payload);
-
       return new Promise(function (resolve, reject) {
         this$1.isRemoteUpdating = true;
         axios({
