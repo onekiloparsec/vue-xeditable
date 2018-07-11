@@ -128,7 +128,10 @@ var XEditable = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
       if (this.type === 'select' && Array.isArray(this.rawValue)) {
         return this.rawValue[this.rawValue.length - 1]
       }
-      return this.rawValue || '?'
+      if (this.rawValue === undefined || this.rawValue === null) {
+        return '?'
+      }
+      return this.rawValue
     },
     $_VueXeditable_onKeydown: function $_VueXeditable_onKeydown (event) {
       if (!this.isEditing) {
