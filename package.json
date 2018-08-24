@@ -1,5 +1,5 @@
 {
-  "name": "@arcsecond/vue-xeditable",
+  "name": "vue-xeditable",
   "version": "1.0.0",
   "private": false,
   "scripts": {
