@@ -1,26 +1,34 @@
-# @arcsecond/vue-xeditable
+# vue-xeditable
 
-## Project setup
-```
-yarn install
-```
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://raw.githubusercontent.com/onekiloparsec/vue-xeditable/master/LICENSE)
 
-### Compiles and hot-reloads for development
-```
-yarn run serve
-```
 
-### Compiles and minifies for production
+Even better editable element in Vue. Original code from https://kar-wai-wong.github.io
+
+# Use Setup
+
+install @onekiloparsec/vue-xeditable
+
 ```
-yarn run build
+npm install @onekiloparsec/vue-xeditable --save
 ```
 
-### Lints and fixes files
+## Vue mount
+
 ```
-yarn run lint
+import vue-xeditable from './vue-xeditable.vue'
+
+new Vue({
+  el: '#app',
+  components: {
+    'vue-xeditable': vue-xeditable
+  }
+})
 ```
 
-### Run your unit tests
-```
-yarn run test:unit
-```
+# Support Types
+
+**text**, **textarea**, **number**, **select**
+
+In particular, a lot of work has been done to make the select widget work perfectly. It handles
+null values, has a correctly selected value, and can respond to escape key to end editing.
