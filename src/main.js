@@ -1,10 +1,8 @@
-import XEditable from './components/XEditable.vue'
+import Vue from 'vue'
+import App from './App.vue'
 
-let VueXeditable = {}
+Vue.config.productionTip = false
 
-VueXeditable.install = function (Vue, options) {
-  Vue.component('VueXeditable', XEditable)
-}
-
-export default VueXeditable
-
+new Vue({
+  render: h => h(App)
+}).$mount('#app')

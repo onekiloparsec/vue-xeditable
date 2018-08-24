@@ -31,8 +31,8 @@
         class='vue-xeditable-form-control'
         @keydown='$_VueXeditable_onKeydown'
         @blur="$_VueXeditable_stopEditing"
+        v-model="rawValue"
       >
-        {{rawValue}}
       </textarea>
 
       <input
@@ -182,14 +182,12 @@
         that.$emit('start-editing', this.rawValue, this.name)
         setTimeout(function () {
           let inputs = Array.from(event.target.nextElementSibling.children)
-          inputs.forEach(i => {
-            i.focus()
-          })
+          inputs.forEach(i => i.focus())
         }, 100)
       },
       $_VueXeditable_stopEditing (event) {
         this.isEditing = false
-        this.$emit('stop-editing', this.rawValue, this.name)
+        this.$emit('stop-editing', this.rawValue, this.name, event)
       },
       $_VueXeditable_valueDidChange (newValue) {
         if (this.type === 'select') {
@@ -208,7 +206,7 @@
                   this.$emit('value-remote-update-error', newValue, error, this.name)
                 })
             } else {
-              console.error('VueXeditable Error: Invalid Remote Update configuration.')
+              this.$emit('value-remote-error', 'Invalid Remote Update configuration.')
             }
           } else {
             this.$_VueXeditable_makeLocalUpdate(newValue)
@@ -252,7 +250,7 @@
             .then(response => {
               this.isRemoteUpdating = false
               this.$_VueXeditable_makeLocalUpdate(newValue)
-              resolve(newValue)
+              resolve(newValue, response)
             })
             .catch(error => {
               this.isRemoteUpdating = false
