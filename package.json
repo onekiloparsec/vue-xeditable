@@ -1,6 +1,8 @@
 {
   "name": "@onekiloparsec/vue-xeditable",
   "version": "1.0.3",
+  "author": "onekiloparsec <cedric@onekilopars.ec>",
+  "license": "MIT",
   "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -8,8 +10,15 @@
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/onekiloparsec/vue-xeditable.git"
+  },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
+  },
+  "bugs": {
+    "url": "https://github.com/onekiloparsec/vue-xeditable/issues"
   },
   "dependencies": {
     "vue": "^2.5.17"
