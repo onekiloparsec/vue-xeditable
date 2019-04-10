@@ -4,8 +4,8 @@
     <h3>Better editable element in Vue 2.x, made for <a href="https://www.arcsecond.io">www.arcsecond.io</a></h3>
 
     <div class='content'>
-      <div>
 
+      <div class="node">
         <h4>Single piece of text (default: type = text)</h4>
         <pre v-pre>&lt;vue-xeditable :value.sync='{{textValue}}'&gt;&lt;/vue-xeditable&gt;</pre>
         <vue-xeditable
@@ -29,9 +29,9 @@
             <span class="value">'{{event.value}}'</span>
           </div>
         </div>
+      </div>
 
-        <!-- -->
-
+      <div class="node">
         <h4>Single piece of text with doubleClick</h4>
         <pre v-pre>&lt;vue-xeditable :value.sync='{{doubeTextValue}}'&gt;&lt;/vue-xeditable&gt;</pre>
         <vue-xeditable
@@ -72,8 +72,35 @@
         <!--<pre v-pre>&lt;editable type='number' value={{numberValue}}&gt;&lt;/editable&gt;</pre>-->
         <!--<vue-xeditable type='number' :value.sync='numberValue'></vue-xeditable>-->
 
-        <!-- -->
+      </div>
 
+      <div class="node">
+        <h4>Number</h4>
+        <pre v-pre>&lt;vue-xeditable :value.sync='{{numberValue}}'&gt;&lt;/vue-xeditable&gt;</pre>
+        <vue-xeditable
+          type="number"
+          name="numberEvents"
+          :value.sync='numberValue'
+          @start-editing="sendStartEditingEvent"
+          @stop-editing="sendStopEditingEvent"
+          @value-will-change="sendValueWillChangeEvent"
+          @value-did-change="sendValueDidChangeEvent"
+        />
+
+        <div class="events-banner" v-show="numberEvents.length > 0">
+          <div
+            class="events-banner-event"
+            v-for="event in numberEvents"
+            :key="event.index"
+          >
+            <span class="prefix">Event {{event.index}}:</span>
+            <span class="content">{{event.message}}</span>
+            <span class="value">'{{event.value}}'</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="node">
         <h4>Editable options (starting with a null value)</h4>
         <pre>options = {{JSON.stringify(selectOptions)}}</pre>
         <pre v-pre>&lt;vue-xeditable type='select' value={{selectValue}} :options='selectOptions'&gt;&lt;/vue-xeditable&gt;</pre>
@@ -101,8 +128,34 @@
             <span class="value">'{{event.value}}'</span>
           </div>
         </div>
-
       </div>
+
+      <div class="node">
+        <h4>Boolean</h4>
+        <pre v-pre>&lt;vue-xeditable :value.sync='{{booleanValue}}'&gt;&lt;/vue-xeditable&gt;</pre>
+        <vue-xeditable
+          type="boolean"
+          name="booleanEvents"
+          :value.sync='booleanValue'
+          @start-editing="sendStartEditingEvent"
+          @stop-editing="sendStopEditingEvent"
+          @value-will-change="sendValueWillChangeEvent"
+          @value-did-change="sendValueDidChangeEvent"
+        />
+
+        <div class="events-banner" v-show="booleanEvents.length > 0">
+          <div
+            class="events-banner-event"
+            v-for="event in booleanEvents"
+            :key="event.index"
+          >
+            <span class="prefix">Event {{event.index}}:</span>
+            <span class="content">{{event.message}}</span>
+            <span class="value">'{{event.value}}'</span>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </template>
@@ -125,8 +178,11 @@
         numberValue: 1,
         selectValue: 'Silver',
         selectOptions: ['Gold', 'Silver', 'Bronze'],
+        booleanValue: false,
         eventsCount: 0,
         textEvents: [],
+        numberEvents: [],
+        booleanEvents: [],
         doubletTextEvents: [],
         selectEvents: []
       }
@@ -167,10 +223,15 @@
     margin: 60px auto;
     position: relative;
     display: block;
+  }
+
+  .node {
     border: 1px solid rgba(0, 0, 0, 0.1);
     background: #fff;
     border-radius: 5px;
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+    padding: 10px;
+    margin: 40px;
   }
 
   .events-banner {
@@ -216,7 +277,6 @@
   }
 
   h4 {
-    padding-top: 10px;
     margin-bottom: 0;
     color: #404040;
   }
