@@ -166,8 +166,7 @@
         if (event.keyCode === 13) {
           this.$_VueXeditable_stopEditing(event)
           this.$_VueXeditable_valueDidChange(event.target.value)
-        }
-        else if (event.keyCode === 27) {
+        } else if (event.keyCode === 27) {
           this.$_VueXeditable_stopEditing(event)
         }
       },
