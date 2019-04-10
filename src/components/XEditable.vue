@@ -265,6 +265,7 @@
   .vue-xeditable {
     color: #222;
     cursor: pointer;
+    line-height: 2.0em;
   }
 
   .vue-xeditable:hover {
