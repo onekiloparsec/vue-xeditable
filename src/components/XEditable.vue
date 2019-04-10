@@ -63,6 +63,15 @@
       >
       </x-custom-select>
 
+      <date-picker
+        v-else-if='type === "date"'
+        :value="rawValue"
+        @selected="$_VueXeditable_valueDidChange"
+        input-class="vue-xeditable-form-control"
+        placeholder="pick a date"
+      >
+      </date-picker>
+
     </div>
 
     <slot name="after" v-if="isRemoteUpdating"></slot>
@@ -72,13 +81,14 @@
 <script>
   import axios from 'axios'
   import XCustomSelect from './XCustomSelect.vue'
+  import DatePicker from 'vuejs-datepicker'
 
   export default {
     name: 'vue-xeditable',
-    components: { XCustomSelect },
+    components: { XCustomSelect, DatePicker },
     props: {
       value: {
-        type: [String, Number, Array, Boolean]
+        type: [String, Number, Array, Boolean, Date]
       },
       type: {
         type: String,
@@ -158,12 +168,12 @@
       $_VueXeditable_getHTMLValue () {
         if (this.$_VueXeditable_isValueEmpty) {
           return this.empty
-        }
-        if (this.type === 'select' && Array.isArray(this.rawValue)) {
+        } else if (this.type === 'select' && Array.isArray(this.rawValue)) {
           return this.rawValue[this.rawValue.length - 1]
-        }
-        if (this.rawValue === undefined || this.rawValue === null) {
+        } else if (this.rawValue === undefined || this.rawValue === null) {
           return '?'
+        } else if (this.type === 'date') {
+          return this.rawValue.toLocaleString()
         }
         return this.rawValue
       },
@@ -197,13 +207,13 @@
         this.$emit('stop-editing', this.rawValue, this.name, event)
       },
       $_VueXeditable_valueDidChange (newValue) {
-        if (this.type === 'select' || this.type === 'boolean') {
+        if (this.type === 'select' || this.type === 'boolean' || this.type === 'date') {
           this.$_VueXeditable_stopEditing() // Needed because no events can be associated with select / option?...
         }
         if (this.type === 'boolean') {
           newValue = !this.rawValue
         }
-        if (this.$_VueXeditable_hasValueChanged(newValue) || this.type === 'select' || this.type === 'boolean') {
+        if (this.$_VueXeditable_hasValueChanged(newValue) || this.type === 'select') {
           this.$emit('value-will-change', this.rawValue, this.name)
 
           if (this.$_VueXeditable_hasRemoteUpdate) {
@@ -294,6 +304,8 @@
   }
 
   .vue-xeditable-control {
+    width: auto;
+    display: inline-block;
   }
 
   .vue-xeditable-form-control {
