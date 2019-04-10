@@ -26,7 +26,6 @@
     "vuejs-datepicker": "^1.5.4"
   },
   "peerDependencies": {
-    "lodash": "^4.17.11"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.5.5",
