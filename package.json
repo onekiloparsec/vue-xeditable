@@ -22,7 +22,8 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "vue": "^2.6.10"
+    "vue": "^2.6.10",
+    "vuejs-datepicker": "^1.5.4"
   },
   "peerDependencies": {
     "lodash": "^4.17.11"
