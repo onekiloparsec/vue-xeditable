@@ -156,6 +156,33 @@
         </div>
       </div>
 
+
+      <div class="node">
+        <h4>Date</h4>
+        <pre v-pre>&lt;vue-xeditable :value.sync='{{dateValue}}'&gt;&lt;/vue-xeditable&gt;</pre>
+        <vue-xeditable
+          type="date"
+          name="dateEvents"
+          :value.sync='dateValue'
+          @start-editing="sendStartEditingEvent"
+          @stop-editing="sendStopEditingEvent"
+          @value-will-change="sendValueWillChangeEvent"
+          @value-did-change="sendValueDidChangeEvent"
+        />
+
+        <div class="events-banner" v-show="dateEvents.length > 0">
+          <div
+            class="events-banner-event"
+            v-for="event in dateEvents"
+            :key="event.index"
+          >
+            <span class="prefix">Event {{event.index}}:</span>
+            <span class="content">{{event.message}}</span>
+            <span class="value">'{{event.value}}'</span>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </template>
@@ -179,12 +206,14 @@
         selectValue: 'Silver',
         selectOptions: ['Gold', 'Silver', 'Bronze'],
         booleanValue: false,
+        dateValue: new Date(),
         eventsCount: 0,
         textEvents: [],
         numberEvents: [],
         booleanEvents: [],
         doubletTextEvents: [],
-        selectEvents: []
+        selectEvents: [],
+        dateEvents: []
       }
     },
     methods: {
