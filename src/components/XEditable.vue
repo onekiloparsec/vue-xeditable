@@ -44,6 +44,14 @@
         @blur="$_VueXeditable_stopEditing"
       >
 
+      <input
+        v-else-if='type === "boolean"'
+        class='vue-xeditable-form-control'
+        type="checkbox"
+        :value="rawValue"
+        @change='$_VueXeditable_valueDidChange'
+      >
+
       <x-custom-select
         v-else-if='type === "select"'
         class='vue-xeditable-form-control'
@@ -70,7 +78,7 @@
     components: { XCustomSelect },
     props: {
       value: {
-        type: [String, Number, Array]
+        type: [String, Number, Array, Boolean]
       },
       type: {
         type: String,
@@ -189,10 +197,13 @@
         this.$emit('stop-editing', this.rawValue, this.name, event)
       },
       $_VueXeditable_valueDidChange (newValue) {
-        if (this.type === 'select') {
+        if (this.type === 'select' || this.type === 'boolean') {
           this.$_VueXeditable_stopEditing() // Needed because no events can be associated with select / option?...
         }
-        if (this.$_VueXeditable_hasValueChanged(newValue) || this.type === 'select') {
+        if (this.type === 'boolean') {
+          newValue = !this.rawValue
+        }
+        if (this.$_VueXeditable_hasValueChanged(newValue) || this.type === 'select' || this.type === 'boolean') {
           this.$emit('value-will-change', this.rawValue, this.name)
 
           if (this.$_VueXeditable_hasRemoteUpdate) {
