@@ -257,7 +257,6 @@
         this.pushEditingEvent('value-will-change', value, name)
       },
       sendValueDidChangeEvent (value, name) {
-        console.log(value, name)
         this.pushEditingEvent('value-did-change', value, name)
       },
       pushEditingEvent (event, value, name) {
