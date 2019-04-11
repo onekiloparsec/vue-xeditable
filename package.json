@@ -1,6 +1,6 @@
 {
   "name": "@onekiloparsec/vue-xeditable",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "author": "onekiloparsec <cedric@onekilopars.ec>",
   "license": "MIT",
   "private": false,
@@ -25,8 +25,7 @@
     "vue": "^2.6.10",
     "vuejs-datepicker": "^1.5.4"
   },
-  "peerDependencies": {
-  },
+  "peerDependencies": {},
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.5.5",
     "@vue/cli-plugin-eslint": "^3.5.1",
