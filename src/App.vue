@@ -101,9 +101,10 @@
       </div>
 
       <div class="node">
-        <h4>Select (starting with a null value)</h4>
+        <h4>Select</h4>
         <pre>options = {{JSON.stringify(selectOptions)}}</pre>
-        <pre v-pre>&lt;vue-xeditable type='select' value={{selectValue}} :options='options'&gt;&lt;/vue-xeditable&gt;</pre>
+        <pre
+          v-pre>&lt;vue-xeditable type='select' value={{selectValue}} :options='options'&gt;&lt;/vue-xeditable&gt;</pre>
         <vue-xeditable
           type='select'
           name="selectEvents"
@@ -114,8 +115,6 @@
           @value-will-change="sendValueWillChangeEvent"
           @value-did-change="sendValueDidChangeEvent"
         />
-        <br/>
-        Selected value is: {{selectValue}}
 
         <div class="events-banner" v-show="selectEvents.length > 0">
           <div
@@ -171,8 +170,6 @@
           @value-will-change="sendValueWillChangeEvent"
           @value-did-change="sendValueDidChangeEvent"
         />
-        <br/>
-        Selected value is: {{selectOptionsWithNull}}
 
         <div class="events-banner" v-show="selectWithNullEvents.length > 0">
           <div
@@ -236,7 +233,7 @@
         selectValue: 'Silver',
         selectOptions: ['Gold', 'Silver', 'Bronze'],
         selectValueWithNull: null,
-        selectOptionsWithNull: [null, true, false],
+        selectOptionsWithNull: [[null, 'Unknown'], true, false],
         booleanValue: false,
         dateValue: new Date(),
         eventsCount: 0,
@@ -260,6 +257,7 @@
         this.pushEditingEvent('value-will-change', value, name)
       },
       sendValueDidChangeEvent (value, name) {
+        console.log(value, name)
         this.pushEditingEvent('value-did-change', value, name)
       },
       pushEditingEvent (event, value, name) {
