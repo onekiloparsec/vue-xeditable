@@ -1,13 +1,12 @@
 <template class="custom-select">
   <select
-    :value="internalOptionValue(value)"
-    @change="onChange($event.target.value)"
+    @change="$emit('input', $event.target.value)"
     ref="$_VueXeditable_Select"
   >
     <option
       v-for="(option, index) in options"
       :key="index"
-      :value="index"
+      :value="internalOptionValue(option)"
       :selected="isSelected(option)"
       ref="options"
     >
@@ -41,12 +40,8 @@
           return option
         }
       },
-      onChange (newSelectionIndex) {
-        // MUST be called 'input'
-        this.$emit('input', this.options[newSelectionIndex])
-      },
       isSelected (option) {
-        return option === this.value
+        return this.internalOptionValue(option) === this.value
       },
       onKeyDown (e) {
         this.$emit('keydown', e)
