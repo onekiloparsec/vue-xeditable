@@ -101,9 +101,9 @@
       </div>
 
       <div class="node">
-        <h4>Editable options (starting with a null value)</h4>
+        <h4>Select (starting with a null value)</h4>
         <pre>options = {{JSON.stringify(selectOptions)}}</pre>
-        <pre v-pre>&lt;vue-xeditable type='select' value={{selectValue}} :options='selectOptions'&gt;&lt;/vue-xeditable&gt;</pre>
+        <pre v-pre>&lt;vue-xeditable type='select' value={{selectValue}} :options='options'&gt;&lt;/vue-xeditable&gt;</pre>
         <vue-xeditable
           type='select'
           name="selectEvents"
@@ -156,6 +156,36 @@
         </div>
       </div>
 
+      <div class="node">
+        <h4>Select "NullBoolean"</h4>
+        <pre>options = {{JSON.stringify(selectOptionsWithNull)}}</pre>
+        <pre v-pre>&lt;vue-xeditable type='select' value={{selectValueWithNull}} :options='options'&gt;&lt;/vue-xeditable&gt;</pre>
+        <vue-xeditable
+          type='select'
+          name="selectWithNullEvents"
+          :value='selectValueWithNull'
+          :options='selectOptionsWithNull'
+          empty="Unknown"
+          @start-editing="sendStartEditingEvent"
+          @stop-editing="sendStopEditingEvent"
+          @value-will-change="sendValueWillChangeEvent"
+          @value-did-change="sendValueDidChangeEvent"
+        />
+        <br/>
+        Selected value is: {{selectOptionsWithNull}}
+
+        <div class="events-banner" v-show="selectWithNullEvents.length > 0">
+          <div
+            class="events-banner-event"
+            v-for="event in selectWithNullEvents"
+            :key="event.index"
+          >
+            <span class="prefix">Event {{event.index}}:</span>
+            <span class="content">{{event.message}}</span>
+            <span class="value">'{{event.value}}'</span>
+          </div>
+        </div>
+      </div>
 
       <div class="node">
         <h4>Date</h4>
@@ -205,6 +235,8 @@
         numberValue: 1,
         selectValue: 'Silver',
         selectOptions: ['Gold', 'Silver', 'Bronze'],
+        selectValueWithNull: null,
+        selectOptionsWithNull: [null, true, false],
         booleanValue: false,
         dateValue: new Date(),
         eventsCount: 0,
@@ -213,6 +245,7 @@
         booleanEvents: [],
         doubletTextEvents: [],
         selectEvents: [],
+        selectWithNullEvents: [],
         dateEvents: []
       }
     },
