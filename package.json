@@ -6,9 +6,10 @@
   "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build --target lib --name VueXEditable ./src/components/XEditable.vue",
+    "build": "vue-cli-service build --target lib ./src/components/index.js",
     "lint": "vue-cli-service lint",
-    "test:unit": "vue-cli-service test:unit"
+    "test:unit": "vue-cli-service test:unit",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
