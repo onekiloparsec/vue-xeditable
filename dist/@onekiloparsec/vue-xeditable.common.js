@@ -5463,7 +5463,7 @@ exports = module.exports = __webpack_require__("2350")(false);
 
 
 // module
-exports.push([module.i, ".vue-xeditable{color:#222;cursor:pointer;line-height:2em}.vue-xeditable:hover{color:#666}.vue-xeditable-value{white-space:pre-wrap;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.vue-xeditable-empty{color:#ea0002;font-style:italic}.vue-xeditable-control{width:auto;display:inline-block}.vue-xeditable-form-control{padding:5px;-webkit-box-sizing:content-box;box-sizing:content-box;color:#555;background-color:#fff;background-image:none;outline:none}", ""]);
+exports.push([module.i, ".vue-xeditable{color:#222;line-height:2em}.vue-xeditable.enabled{cursor:pointer}.vue-xeditable:hover{color:#666}.vue-xeditable-value{white-space:pre-wrap;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.vue-xeditable-empty{color:#ea0002;font-style:italic}.vue-xeditable-control{width:auto;display:inline-block}.vue-xeditable-form-control{padding:5px;-webkit-box-sizing:content-box;box-sizing:content-box;color:#555;background-color:#fff;background-image:none;outline:none}", ""]);
 
 // exports
 
@@ -5704,12 +5704,12 @@ if (typeof window !== 'undefined') {
 // Indicate to webpack that this file can be concatenated
 /* harmony default export */ var setPublicPath = (null);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"7fb1762d-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/XEditable.vue?vue&type=template&id=5c154c24&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"vue-xeditable"},[(_vm.isRemoteUpdating)?_vm._t("before"):_vm._e(),_c('span',{directives:[{name:"show",rawName:"v-show",value:(!_vm.isEditing && !_vm.isRemoteUpdating),expression:"!isEditing && !isRemoteUpdating"}],staticClass:"vue-xeditable-value",class:{'vue-xeditable-empty': _vm.$_VueXeditable_isValueEmpty},domProps:{"innerHTML":_vm._s(_vm.$_VueXeditable_getHTMLValue())},on:{"click":function($event){return _vm.$_VueXeditable_maybeStartEditing(1, $event)},"dblclick":function($event){return _vm.$_VueXeditable_maybeStartEditing(2, $event)}}}),_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.isEditing && !_vm.isRemoteUpdating),expression:"isEditing && !isRemoteUpdating"}],staticClass:"vue-xeditable-control"},[(_vm.type === "text")?_c('input',{staticClass:"vue-xeditable-form-control",attrs:{"type":"text","autofocus":""},domProps:{"value":_vm.rawValue},on:{"keydown":_vm.$_VueXeditable_onKeydown,"blur":_vm.$_VueXeditable_stopEditing}}):(_vm.type === "textarea")?_c('textarea',{directives:[{name:"model",rawName:"v-model",value:(_vm.rawValue),expression:"rawValue"}],staticClass:"vue-xeditable-form-control",domProps:{"value":(_vm.rawValue)},on:{"keydown":_vm.$_VueXeditable_onKeydown,"blur":_vm.$_VueXeditable_stopEditing,"input":function($event){if($event.target.composing){ return; }_vm.rawValue=$event.target.value}}}):(_vm.type === "number")?_c('input',{staticClass:"vue-xeditable-form-control",attrs:{"type":"number"},domProps:{"value":_vm.rawValue},on:{"keydown":_vm.$_VueXeditable_onKeydown,"blur":_vm.$_VueXeditable_stopEditing}}):(_vm.type === "boolean")?_c('input',{staticClass:"vue-xeditable-form-control",attrs:{"type":"checkbox"},domProps:{"value":_vm.rawValue},on:{"change":_vm.$_VueXeditable_valueDidChange}}):(_vm.type === "select")?_c('x-custom-select',{staticClass:"vue-xeditable-form-control",attrs:{"value":_vm.rawValue,"options":_vm.options},on:{"input":_vm.$_VueXeditable_valueDidChange,"keydown":_vm.$_VueXeditable_onKeydown,"blur":_vm.$_VueXeditable_stopEditing}}):(_vm.type === "date")?_c('date-picker',{attrs:{"value":_vm.rawValue,"input-class":"vue-xeditable-form-control","placeholder":"pick a date"},on:{"selected":_vm.$_VueXeditable_valueDidChange}}):_vm._e()],1),(_vm.isRemoteUpdating)?_vm._t("after"):_vm._e()],2)}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"7fb1762d-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/XEditable.vue?vue&type=template&id=c187f7f0&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"vue-xeditable",class:{'enabled': _vm.enableEditing}},[(_vm.isRemoteUpdating)?_vm._t("before"):_vm._e(),_c('span',{directives:[{name:"show",rawName:"v-show",value:((!_vm.isEditing && !_vm.isRemoteUpdating) || !_vm.enableEditing),expression:"(!isEditing && !isRemoteUpdating) || !enableEditing"}],class:{'vue-xeditable-empty': _vm.$_VueXeditable_isValueEmpty, 'vue-xeditable-value': _vm.enableEditing},attrs:{"title":(_vm.enableEditing) ? _vm.titleEnabled : _vm.titleDisabled},domProps:{"innerHTML":_vm._s(_vm.$_VueXeditable_getHTMLValue())},on:{"click":function($event){return _vm.$_VueXeditable_maybeStartEditing(1, $event)},"dblclick":function($event){return _vm.$_VueXeditable_maybeStartEditing(2, $event)}}}),_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.isEditing && !_vm.isRemoteUpdating && _vm.enableEditing),expression:"isEditing && !isRemoteUpdating && enableEditing"}],staticClass:"vue-xeditable-control"},[(_vm.type === "text")?_c('input',{staticClass:"vue-xeditable-form-control",attrs:{"type":"text","autofocus":""},domProps:{"value":_vm.rawValue},on:{"keydown":_vm.$_VueXeditable_onKeydown,"blur":_vm.$_VueXeditable_stopEditing}}):(_vm.type === "textarea")?_c('textarea',{directives:[{name:"model",rawName:"v-model",value:(_vm.rawValue),expression:"rawValue"}],staticClass:"vue-xeditable-form-control",domProps:{"value":(_vm.rawValue)},on:{"keydown":_vm.$_VueXeditable_onKeydown,"blur":_vm.$_VueXeditable_stopEditing,"input":function($event){if($event.target.composing){ return; }_vm.rawValue=$event.target.value}}}):(_vm.type === "number")?_c('input',{staticClass:"vue-xeditable-form-control",attrs:{"type":"number"},domProps:{"value":_vm.rawValue},on:{"keydown":_vm.$_VueXeditable_onKeydown,"blur":_vm.$_VueXeditable_stopEditing}}):(_vm.type === "boolean")?_c('input',{staticClass:"vue-xeditable-form-control",attrs:{"type":"checkbox"},domProps:{"value":_vm.rawValue},on:{"change":_vm.$_VueXeditable_valueDidChange}}):(_vm.type === "select")?_c('x-custom-select',{staticClass:"vue-xeditable-form-control",attrs:{"value":_vm.rawValue,"options":_vm.options},on:{"input":_vm.$_VueXeditable_valueDidChange,"keydown":_vm.$_VueXeditable_onKeydown,"blur":_vm.$_VueXeditable_stopEditing}}):(_vm.type === "date")?_c('date-picker',{attrs:{"value":_vm.rawValue,"input-class":"vue-xeditable-form-control","placeholder":"pick a date"},on:{"selected":_vm.$_VueXeditable_valueDidChange}}):_vm._e()],1),(_vm.isRemoteUpdating)?_vm._t("after"):_vm._e()],2)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/XEditable.vue?vue&type=template&id=5c154c24&
+// CONCATENATED MODULE: ./src/components/XEditable.vue?vue&type=template&id=c187f7f0&
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/promise.js
 var promise = __webpack_require__("795b");
@@ -7560,6 +7560,21 @@ var Datepicker = {render: function(){var _vm=this;var _h=_vm.$createElement;var 
           headers: null
         };
       }
+    },
+    enableEditing: {
+      type: Boolean,
+      required: false,
+      default: true
+    },
+    titleEnabled: {
+      type: String,
+      required: false,
+      default: ''
+    },
+    titleDisabled: {
+      type: String,
+      required: false,
+      default: ''
     }
   },
   data: function data() {
@@ -7620,7 +7635,7 @@ var Datepicker = {render: function(){var _vm=this;var _h=_vm.$createElement;var 
       }
     },
     $_VueXeditable_maybeStartEditing: function $_VueXeditable_maybeStartEditing(value, event) {
-      if (value === 1 && !this.editOnDoubleClick || value === 2 && this.editOnDoubleClick) {
+      if (this.enableEditing && value === 1 && !this.editOnDoubleClick || value === 2 && this.editOnDoubleClick) {
         this.$_VueXeditable_startEditing(event);
       }
     },
