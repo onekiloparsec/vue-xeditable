@@ -4,6 +4,7 @@
 
     <span
       :class="{'vue-xeditable-empty': $_VueXeditable_isValueEmpty, 'vue-xeditable-value': enableEditing}"
+      :title='(enableEditing) ? titleEnabled : titleDisabled'
       v-show='(!isEditing && !isRemoteUpdating) || !enableEditing'
       v-on:click='$_VueXeditable_maybeStartEditing(1, $event)'
       v-on:dblclick='$_VueXeditable_maybeStartEditing(2, $event)'
@@ -138,6 +139,15 @@
         required: false,
         default: true
       },
+      titleEnabled: {
+        type: String,
+        required: false,
+        default: ''
+      },
+      titleDisabled: {
+        type: String,
+        required: false,
+        default: ''
       }
     },
     data () {
