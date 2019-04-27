@@ -12,6 +12,7 @@
           type="text"
           name="textEvents"
           :value.sync='textValue'
+          :enable-editing="true"
           @start-editing="sendStartEditingEvent"
           @stop-editing="sendStopEditingEvent"
           @value-will-change="sendValueWillChangeEvent"
@@ -29,6 +30,17 @@
             <span class="value">'{{event.value}}'</span>
           </div>
         </div>
+      </div>
+
+      <div class="node">
+        <h4>Single piece of text but disabled</h4>
+        <pre v-pre>&lt;vue-xeditable :value.sync='{{textValueDisabled}}'&gt;&lt;/vue-xeditable&gt;</pre>
+        <vue-xeditable
+          type="text"
+          name="textEvents"
+          :value.sync='textValueDisabled'
+          :enable-editing="false"
+        />
       </div>
 
       <div class="node">

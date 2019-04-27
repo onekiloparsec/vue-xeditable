@@ -1,18 +1,17 @@
 <template>
-  <div class='vue-xeditable'>
+  <div class='vue-xeditable' :class="{'enabled': enableEditing}">
     <slot name="before" v-if="isRemoteUpdating"></slot>
 
     <span
-      class="vue-xeditable-value"
-      :class="{'vue-xeditable-empty': $_VueXeditable_isValueEmpty}"
-      v-show='!isEditing && !isRemoteUpdating'
+      :class="{'vue-xeditable-empty': $_VueXeditable_isValueEmpty, 'vue-xeditable-value': enableEditing}"
+      v-show='(!isEditing && !isRemoteUpdating) || !enableEditing'
       v-on:click='$_VueXeditable_maybeStartEditing(1, $event)'
       v-on:dblclick='$_VueXeditable_maybeStartEditing(2, $event)'
       v-html='$_VueXeditable_getHTMLValue()'>
     </span>
 
     <div
-      v-show='isEditing && !isRemoteUpdating'
+      v-show='isEditing && !isRemoteUpdating && enableEditing'
       class='vue-xeditable-control'
     >
 
@@ -85,7 +84,7 @@
 
   export default {
     name: 'vue-xeditable',
-    components: { XCustomSelect, DatePicker },
+    components: {XCustomSelect, DatePicker},
     props: {
       value: {
         type: [String, Number, Array, Boolean, Date]
@@ -133,6 +132,12 @@
             headers: null
           }
         }
+      },
+      enableEditing: {
+        type: Boolean,
+        required: false,
+        default: true
+      },
       }
     },
     data () {
@@ -189,7 +194,7 @@
         }
       },
       $_VueXeditable_maybeStartEditing (value, event) {
-        if ((value === 1 && !this.editOnDoubleClick) || (value === 2 && this.editOnDoubleClick)) {
+        if (this.enableEditing && (value === 1 && !this.editOnDoubleClick) || (value === 2 && this.editOnDoubleClick)) {
           this.$_VueXeditable_startEditing(event)
         }
       },
@@ -285,8 +290,11 @@
 <style>
   .vue-xeditable {
     color: #222;
-    cursor: pointer;
     line-height: 2.0em;
+  }
+
+  .vue-xeditable.enabled {
+    cursor: pointer;
   }
 
   .vue-xeditable:hover {
