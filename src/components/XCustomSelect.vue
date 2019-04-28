@@ -1,6 +1,6 @@
 <template class="custom-select">
   <select
-    @change="$emit('input', $event.target.value)"
+    @change="handleChange"
     ref="$_VueXeditable_Select"
   >
     <option
@@ -45,6 +45,12 @@
       },
       onKeyDown (e) {
         this.$emit('keydown', e)
+      },
+      handleChange (event) {
+        const value = this.options.find(o => {
+          return this.internalOptionValue(o) === event.target.value
+        })
+        this.$emit('input', value)
       }
     }
   }
