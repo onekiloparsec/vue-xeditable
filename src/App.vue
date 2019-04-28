@@ -116,8 +116,7 @@
       <div class="node">
         <h4>Select</h4>
         <pre>options = {{JSON.stringify(selectOptions)}}</pre>
-        <pre
-          v-pre>&lt;vue-xeditable type='select' value={{selectValue}} :options='options'&gt;&lt;/vue-xeditable&gt;</pre>
+        <pre v-pre>&lt;vue-xeditable type='select' value={{selectValue}} :options='options'&gt;&lt;/vue-xeditable&gt;</pre>
         <vue-xeditable
           type='select'
           name="selectEvents"
@@ -133,6 +132,34 @@
           <div
             class="events-banner-event"
             v-for="event in selectEvents"
+            :key="event.index"
+          >
+            <span class="prefix">Event {{event.index}}:</span>
+            <span class="content">{{event.message}}</span>
+            <span class="value">'{{event.value}}'</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="node">
+        <h4>Select With Choices</h4>
+        <pre>options = {{JSON.stringify(selectWithChoicesOptions)}}</pre>
+        <pre v-pre>&lt;vue-xeditable type='select' value={{selectWithChoicesValue}} :options='options'&gt;&lt;/vue-xeditable&gt;</pre>
+        <vue-xeditable
+          type='select'
+          name="selectWithChoicesEvents"
+          :value='selectWithChoicesValue'
+          :options='selectWithChoicesOptions'
+          @start-editing="sendStartEditingEvent"
+          @stop-editing="sendStopEditingEvent"
+          @value-will-change="sendValueWillChangeEvent"
+          @value-did-change="sendValueDidChangeEvent"
+        />
+
+        <div class="events-banner" v-show="selectWithChoicesEvents.length > 0">
+          <div
+            class="events-banner-event"
+            v-for="event in selectWithChoicesEvents"
             :key="event.index"
           >
             <span class="prefix">Event {{event.index}}:</span>
@@ -246,6 +273,8 @@
         numberValue: 1,
         selectValue: 'Silver',
         selectOptions: ['Gold', 'Silver', 'Bronze'],
+        selectWithChoicesValue: ['', '---------'],
+        selectWithChoicesOptions: [['', '---------'], ['unk', 'Unknown'], ['equ', 'Equatorial'], ['cas', 'Cassegrain'], ['aaz', 'Alt-Az']],
         selectValueWithNull: null,
         selectOptionsWithNull: [[null, 'Unknown'], true, false],
         booleanValue: false,
@@ -256,6 +285,7 @@
         booleanEvents: [],
         doubletTextEvents: [],
         selectEvents: [],
+        selectWithChoicesEvents: [],
         selectWithNullEvents: [],
         dateEvents: []
       }
@@ -275,7 +305,7 @@
       },
       pushEditingEvent (event, value, name) {
         this.eventsCount += 1
-        this[name].push({ index: this.eventsCount, message: event, value: value })
+        this[name].push({index: this.eventsCount, message: event, value: value})
         setTimeout(() => {
           this.events.shift()
         }, 60000)
