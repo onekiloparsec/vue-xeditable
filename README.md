@@ -28,7 +28,7 @@ new Vue({
 
 # Support Types
 
-**text**, **textarea**, **number**, **select**
+**text**, **textarea**, **number**, **date**, **select**
 
 In particular, a lot of work has been done to make the select widget work perfectly. It handles
 null values, has a correctly selected value, and can respond to escape key to end editing.
