@@ -16,7 +16,7 @@ npm install @onekiloparsec/vue-xeditable --save
 ## Vue mount
 
 ```
-import vue-xeditable from './vue-xeditable.vue'
+import { XEditable } from '@onekiloparsec/vue-xeditable'
 
 new Vue({
   el: '#app',

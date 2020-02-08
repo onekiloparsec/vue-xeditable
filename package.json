@@ -1,5 +1,5 @@
 {
-  "name": "vue-simple-xeditable",
+  "name": "@onekiloparsec/vue-xeditable",
   "version": "1.2.6",
   "author": "onekiloparsec <cedric@onekiloparsec.dev>",
   "license": "MIT",
@@ -14,9 +14,6 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/onekiloparsec/vue-xeditable.git"
-  },
-  "publishConfig": {
-    "registry": "http://localhost:4873"
   },
   "bugs": {
     "url": "https://github.com/onekiloparsec/vue-xeditable/issues"
