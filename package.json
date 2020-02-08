@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/onekiloparsec/vue-xeditable.git"
+    "url": "git+https://github.com/onekiloparsec/vue-xeditable.git"
   },
   "bugs": {
     "url": "https://github.com/onekiloparsec/vue-xeditable/issues"
@@ -33,5 +33,11 @@
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "^24.9.0",
     "vue-template-compiler": "^2.6.11"
+  },
+  "description": "[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://raw.githubusercontent.com/onekiloparsec/vue-xeditable/master/LICENSE)",
+  "homepage": "https://github.com/onekiloparsec/vue-xeditable#readme",
+  "main": "src/components/index.js",
+  "directories": {
+    "test": "tests"
   }
 }
