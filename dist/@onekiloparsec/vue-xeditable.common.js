@@ -4719,12 +4719,12 @@ if (typeof window !== 'undefined') {
 // Indicate to webpack that this file can be concatenated
 /* harmony default export */ var setPublicPath = (null);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"779f3fe9-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/XEditable.vue?vue&type=template&id=c187f7f0&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"300b3cd4-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/XEditable.vue?vue&type=template&id=1e107b13&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"vue-xeditable",class:{'enabled': _vm.enableEditing}},[(_vm.isRemoteUpdating)?_vm._t("before"):_vm._e(),_c('span',{directives:[{name:"show",rawName:"v-show",value:((!_vm.isEditing && !_vm.isRemoteUpdating) || !_vm.enableEditing),expression:"(!isEditing && !isRemoteUpdating) || !enableEditing"}],class:{'vue-xeditable-empty': _vm.$_VueXeditable_isValueEmpty, 'vue-xeditable-value': _vm.enableEditing},attrs:{"title":(_vm.enableEditing) ? _vm.titleEnabled : _vm.titleDisabled},domProps:{"innerHTML":_vm._s(_vm.$_VueXeditable_getHTMLValue())},on:{"click":function($event){return _vm.$_VueXeditable_maybeStartEditing(1, $event)},"dblclick":function($event){return _vm.$_VueXeditable_maybeStartEditing(2, $event)}}}),_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.isEditing && !_vm.isRemoteUpdating && _vm.enableEditing),expression:"isEditing && !isRemoteUpdating && enableEditing"}],staticClass:"vue-xeditable-control"},[(_vm.type === "text")?_c('input',{staticClass:"vue-xeditable-form-control",attrs:{"type":"text","autofocus":""},domProps:{"value":_vm.rawValue},on:{"keydown":_vm.$_VueXeditable_onKeydown,"blur":_vm.$_VueXeditable_stopEditing}}):(_vm.type === "textarea")?_c('textarea',{directives:[{name:"model",rawName:"v-model",value:(_vm.rawValue),expression:"rawValue"}],staticClass:"vue-xeditable-form-control",domProps:{"value":(_vm.rawValue)},on:{"keydown":_vm.$_VueXeditable_onKeydown,"blur":_vm.$_VueXeditable_stopEditing,"input":function($event){if($event.target.composing){ return; }_vm.rawValue=$event.target.value}}}):(_vm.type === "number")?_c('input',{staticClass:"vue-xeditable-form-control",attrs:{"type":"number"},domProps:{"value":_vm.rawValue},on:{"keydown":_vm.$_VueXeditable_onKeydown,"blur":_vm.$_VueXeditable_stopEditing}}):(_vm.type === "boolean")?_c('input',{staticClass:"vue-xeditable-form-control",attrs:{"type":"checkbox"},domProps:{"value":_vm.rawValue},on:{"change":_vm.$_VueXeditable_valueDidChange}}):(_vm.type === "select")?_c('x-custom-select',{staticClass:"vue-xeditable-form-control",attrs:{"value":_vm.rawValue,"options":_vm.options},on:{"input":_vm.$_VueXeditable_valueDidChange,"keydown":_vm.$_VueXeditable_onKeydown,"blur":_vm.$_VueXeditable_stopEditing}}):(_vm.type === "date")?_c('date-picker',{attrs:{"value":_vm.rawValue,"input-class":"vue-xeditable-form-control","placeholder":"pick a date"},on:{"selected":_vm.$_VueXeditable_valueDidChange}}):_vm._e()],1),(_vm.isRemoteUpdating)?_vm._t("after"):_vm._e()],2)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/XEditable.vue?vue&type=template&id=c187f7f0&
+// CONCATENATED MODULE: ./src/components/XEditable.vue?vue&type=template&id=1e107b13&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.promise.js
 var es6_promise = __webpack_require__("551c");
@@ -4760,7 +4760,7 @@ var es6_number_constructor = __webpack_require__("c5f6");
 var axios = __webpack_require__("bc3a");
 var axios_default = /*#__PURE__*/__webpack_require__.n(axios);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"779f3fe9-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/XCustomSelect.vue?vue&type=template&id=18e83e6b&class=custom-select&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"300b3cd4-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/XCustomSelect.vue?vue&type=template&id=18e83e6b&class=custom-select&
 var XCustomSelectvue_type_template_id_18e83e6b_class_custom_select_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('select',{ref:"$_VueXeditable_Select",on:{"change":_vm.handleChange}},_vm._l((_vm.options),function(option,index){return _c('option',{key:index,ref:"options",refInFor:true,domProps:{"value":_vm.internalOptionValue(option),"selected":_vm.isSelected(option)}},[_vm._v("\n    "+_vm._s(_vm.displayedOptionValue(option))+"\n  ")])}),0)}
 var XCustomSelectvue_type_template_id_18e83e6b_class_custom_select_staticRenderFns = []
 
@@ -7523,7 +7523,7 @@ __vue_render__$4._withStripped = true;
       default: function _default() {
         return {
           url: null,
-          method: 'PUT',
+          method: 'PATCH',
           key: null,
           resource: null,
           headers: null
@@ -7574,7 +7574,7 @@ __vue_render__$4._withStripped = true;
       return this.remote && this.remote.url && this.remote.url.length && this.remote.key && this.remote.key.length;
     },
     $_VueXeditable_hasValidRemote: function $_VueXeditable_hasValidRemote() {
-      return this.$_VueXeditable_hasRemoteUpdate && ['PUT', 'POST'].includes(this.remote.method.toUpperCase());
+      return this.$_VueXeditable_hasRemoteUpdate && ['PATCH', 'PUT', 'POST'].includes(this.remote.method.toUpperCase());
     }
   },
   methods: {
