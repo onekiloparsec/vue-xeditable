@@ -127,7 +127,7 @@
         default: function () {
           return {
             url: null,
-            method: 'PUT',
+            method: 'PATCH',
             key: null,
             resource: null,
             headers: null
@@ -176,7 +176,7 @@
         return this.remote && this.remote.url && this.remote.url.length && this.remote.key && this.remote.key.length
       },
       $_VueXeditable_hasValidRemote () {
-        return this.$_VueXeditable_hasRemoteUpdate && ['PUT', 'POST'].includes(this.remote.method.toUpperCase())
+        return this.$_VueXeditable_hasRemoteUpdate && ['PATCH', 'PUT', 'POST'].includes(this.remote.method.toUpperCase())
       }
     },
     methods: {
