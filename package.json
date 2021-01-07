@@ -19,7 +19,7 @@
     "url": "https://github.com/onekiloparsec/vue-xeditable/issues"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "vue": "^2.6.11",
     "vuejs-datepicker": "^1.6.2"
   },
