@@ -3,11 +3,12 @@ module.exports = {
     config.externals = {
       ...config.externals,
       'lodash': 'lodash',
-      '_': 'lodash'
+      '_': 'lodash',
+      'axios': 'axios',
+      'vuejs-datepicker': 'vuejs-datepicker'
     }
   },
   css: {
     extract: false
-  },
-
+  }
 }
