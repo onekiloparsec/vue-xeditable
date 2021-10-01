@@ -1,11 +1,11 @@
 <template>
-  <div class='vue-xeditable' :class="{'enabled': enableEditing}">
-    <slot name="before" v-if="isRemoteUpdating"></slot>
+  <div :class="{'enabled': enableEditing}" class='vue-xeditable'>
+    <slot v-if="isRemoteUpdating" name="before"></slot>
 
     <span
+      v-show='(!isEditing && !isRemoteUpdating) || !enableEditing'
       :class="{'vue-xeditable-empty': $_VueXeditable_isValueEmpty, 'vue-xeditable-value': enableEditing}"
       :title='(enableEditing) ? titleEnabled : titleDisabled'
-      v-show='(!isEditing && !isRemoteUpdating) || !enableEditing'
       v-on:click='$_VueXeditable_maybeStartEditing(1, $event)'
       v-on:dblclick='$_VueXeditable_maybeStartEditing(2, $event)'
       v-html='$_VueXeditable_getHTMLValue()'>
@@ -18,63 +18,63 @@
 
       <input
         v-if='type === "text"'
+        :value="rawValue"
+        autofocus
         class='vue-xeditable-form-control'
         type="text"
-        :value="rawValue"
-        @keydown='$_VueXeditable_onKeydown'
         @blur="$_VueXeditable_stopEditing"
-        autofocus
+        @keydown='$_VueXeditable_onKeydown'
       >
 
       <textarea
         v-else-if='type === "textarea"'
-        class='vue-xeditable-form-control'
-        @keydown='$_VueXeditable_onKeydown'
-        @blur="$_VueXeditable_stopEditing"
         v-model="rawValue"
+        class='vue-xeditable-form-control'
+        @blur="$_VueXeditable_stopEditing"
+        @keydown='$_VueXeditable_onKeydown'
       >
       </textarea>
 
       <input
         v-else-if='type === "number"'
+        :value="rawValue"
         class='vue-xeditable-form-control'
         type="number"
-        :value="rawValue"
-        @keydown='$_VueXeditable_onKeydown'
         @blur="$_VueXeditable_stopEditing"
+        @keydown='$_VueXeditable_onKeydown'
       >
 
       <input
         v-else-if='type === "boolean"'
+        :value="rawValue"
         class='vue-xeditable-form-control'
         type="checkbox"
-        :value="rawValue"
         @change='$_VueXeditable_valueDidChange'
       >
 
       <x-custom-select
         v-else-if='type === "select"'
-        class='vue-xeditable-form-control'
-        :value="rawValue"
         :options="options"
+        :value="rawValue"
+        class='vue-xeditable-form-control'
+        @blur="$_VueXeditable_stopEditing"
         @input='$_VueXeditable_valueDidChange'
         @keydown="$_VueXeditable_onKeydown"
-        @blur="$_VueXeditable_stopEditing"
       >
       </x-custom-select>
 
       <date-picker
         v-else-if='type === "date"'
         :value="rawValue"
-        @selected="$_VueXeditable_valueDidChange"
         input-class="vue-xeditable-form-control"
         placeholder="pick a date"
+        @selected="$_VueXeditable_valueDidChange"
       >
       </date-picker>
 
     </div>
 
-    <slot name="after" v-if="isRemoteUpdating"></slot>
+    <slot v-if="isRemoteUpdating" name="after"></slot>
   </div>
 </template>
 
@@ -85,7 +85,7 @@
 
   export default {
     name: 'vue-xeditable',
-    components: {XCustomSelect, DatePicker},
+    components: { XCustomSelect, DatePicker },
     props: {
       value: {
         type: [String, Number, Array, Boolean, Date]
