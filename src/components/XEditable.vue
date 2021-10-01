@@ -189,6 +189,8 @@
           return '?'
         } else if (this.type === 'date') {
           return this.rawValue.toLocaleString()
+        } else if (this.type === 'number') {
+          return this.rawValue.toString()
         }
         return this.rawValue
       },
