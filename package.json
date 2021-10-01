@@ -6,10 +6,11 @@
   "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build --target lib ./src/components/index.js",
+    "build": "vue-cli-service build --target lib ./src/components/index.js --name vue-xeditable",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit",
-    "prepublishOnly": "npm run build"
+    "prepublish": "npm run build",
+    "build-report": "vue-cli-service build --report"
   },
   "repository": {
     "type": "git",
@@ -19,16 +20,16 @@
     "url": "https://github.com/onekiloparsec/vue-xeditable/issues"
   },
   "dependencies": {
-    "axios": "^0.21.1",
-    "vue": "^2.6.11",
+    "axios": "^0.21.4",
+    "vue": "^2.6.14",
     "vuejs-datepicker": "^1.6.2"
   },
   "peerDependencies": {},
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.12.1",
-    "@vue/cli-plugin-eslint": "^3.12.1",
-    "@vue/cli-plugin-unit-jest": "^3.12.1",
-    "@vue/cli-service": "^3.12.1",
+    "@vue/cli-plugin-eslint": "^3.1.1",
+    "@vue/cli-plugin-unit-jest": "^4.5.13",
+    "@vue/cli-service": "^4.5.13",
     "@vue/test-utils": "^1.0.0-beta.31",
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "^24.9.0",
